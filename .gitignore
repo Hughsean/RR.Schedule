@@ -1,0 +1,9 @@
+.idea
+.vs
+out
+cmake-build-debug-visual-studio-x64
+cmake-build-debug-visual-studio-x86
+cmake-build-release-visual-studio-x64
+cmake-build-release-visual-studio-x86
+build
+.vscode

@@ -2,10 +2,12 @@ extern "C" {
 #include "library.h"
 }
 
+//#include <format>
 #include <iostream>
-#include <format>
 int main() {
-    test();
-    std::cout<<std::format("wqiodh\n");
+    ma([]{
+//        std::cout<<std::format("hello\n");
+    });
+    //    std::cout<<std::format("test\n");
     return 0;
 }

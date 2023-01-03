@@ -2,12 +2,13 @@ extern "C" {
 #include "library.h"
 }
 
-//#include <format>
-#include <iostream>
+#include "iostream"
+#include "sys/time.h"
+#include "thread"
+#include <csignal>
+int n=0;
+void fun(int i);
+
 int main() {
-    ma([]{
-//        std::cout<<std::format("hello\n");
-    });
-    //    std::cout<<std::format("test\n");
     return 0;
 }

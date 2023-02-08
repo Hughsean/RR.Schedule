@@ -1,14 +1,12 @@
+//#define CLOCK
+
 extern "C" {
-#include "library.h"
+#include "core.h"
+#include "helper.h"
 }
 
-#include "iostream"
-#include "sys/time.h"
-#include "thread"
-#include <csignal>
-int n=0;
-void fun(int i);
-
 int main() {
+    init(kernel);
+    clock_g(irq_handler);
     return 0;
 }

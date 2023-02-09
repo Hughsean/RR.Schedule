@@ -1,16 +1,19 @@
 #ifndef A_C_LIB_HELPER_H
 #define A_C_LIB_HELPER_H
-#include "core.h"
-void        clock_g(void handler(int));
-void        keyboard_g(void handler(int));
 
-inline void irq_generator() {
-#ifdef CLOCK
-    clock_g(irq_handler);
-#endif
-#ifdef KEYBOARD
-    keyboard_g(irq_handler);
+void timer();
+void keyboard();
+
+inline void clock_g() {
+#ifdef TM
+        timer();
+#elif defined(KB)
+        keyboard();
 #endif
 }
 
+void print_tittle();
+void show_pcblist(PCB* pcb);
+void show_pcb(PCB* pcb);
+void show_process(Process* pro);
 #endif  // A_C_LIB_HELPER_H

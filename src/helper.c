@@ -1,40 +1,36 @@
 #include "helper.h"
+#include "signal.h"
 #include "stdio.h"
-//#include "unistd.h"
-//#include <stdlib.h>
-//#include "csignal"
-//#include "random"
-//#include "sys/time.h"
-//#include "stdlib.h"
-void clock_g(void irq_handler(int)) {
-//    struct sigaction act {};
-//    struct itimerval t {};
-//
-//    act.sa_handler        = irq_handler;
-//    t.it_interval.tv_sec  = RR_SLICE;
-//    t.it_interval.tv_usec = 0;
-//    t.it_value.tv_sec     = 0;
-//    t.it_value.tv_usec    = 1000;
-//
-//    sigaction(SIGALRM, &act, nullptr);
-//    setitimer(ITIMER_REAL, &t, nullptr);
+#include "sys/time.h"
+#include "unistd.h"
 
+void clock_g(void handler(int)) {
+
+    struct itimerval t, old_t;
+    //    struct sigaction act, old_act;
+    //    act.sa_handler        = handler;
+    t.it_interval.tv_sec  = 1;
+    t.it_interval.tv_usec = 0;
+    t.it_value.tv_sec     = 1;
+    t.it_value.tv_usec    = 0;
+    //
+    //    sigaction(SIGALRM, &act, &old_act);
+    signal(SIGALRM, handler);
+    setitimer(ITIMER_REAL, &t, &old_t);
+    //
     while (1) {
-//        pause();
+        pause();
         if (kernel->power == 0) {
             break;
         }
-//        sleep(1000);
-        // todo
     }
 }
 void keyboard_g(void handler(int)) {
     while (1) {
+        getchar();
         if (kernel->power == 0) {
             break;
         }
-//        getchar();
-        getchar();
         handler(0);
         // todo
     }

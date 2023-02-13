@@ -3,6 +3,12 @@
 
 #include "iostream"
 
+typedef struct pro_d {
+        Process pro;
+        int     prt;
+        int     arrive_time;
+} Pro_d;
+
 void timer();
 void keyboard();
 
@@ -20,6 +26,6 @@ void show_pcb(std::ostream &os,PCB* pcb);
 void show_process(std::ostream &os,Process* pro);
 
 
-Process *process_g();
+Process process_random_g();
 
 #endif  // A_C_LIB_HELPER_H

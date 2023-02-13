@@ -4,11 +4,10 @@
 #include "stdio.h"
 #include "stdlib.h"
 //
-static Kernel   *kernel  = NULL;
-static MM_Slice *mm      = NULL;
-static char     *pid_map = NULL;
+static Kernel *kernel  = NULL;
+static char   *pid_map = NULL;
+// static Pro_t     NULL_CELL = { .is_null = 1 };
 //
-static MM_Slice NULL_CELL = { .is_null = 1 };
 
 const Kernel *kernel_entries() {
         return kernel;
@@ -24,9 +23,6 @@ void init() {
 
         pid_map = (char *)malloc(sizeof(char) * PID_MAX);
         memset(pid_map, 0, sizeof(char) * PID_MAX);
-
-        mm = (MM_Slice *)malloc(sizeof(MM_Slice) * MM_SIZE);
-        memset(mm, 0, sizeof(MM_Slice) * MM_SIZE);
 }
 void power_off(int _) {
         kernel->power = 0;
@@ -50,13 +46,14 @@ void pid_free(int pid) {
 }
 
 PCB *create_pcb(Process *pi, Priority prt) {
-        PCB *p   = (PCB *)malloc(sizeof(PCB));
-        p->pre   = NULL;
-        p->next  = NULL;
-        p->pro   = pi;
-        p->pid   = pid_alloc();
-        p->prt   = prt;
-        p->state = READY;
+
+        PCB *p      = (PCB *)malloc(sizeof(PCB));
+        p->prt      = prt;
+        p->pro      = pi;
+        p->run_time = 0;
+        p->state    = READY;
+        p->next     = NULL;
+        p->pid      = pid_alloc();
         return p;
 }
 void remove_pcb(PCB *pcb) {
@@ -64,29 +61,20 @@ void remove_pcb(PCB *pcb) {
         free(pcb->pro);
         free(pcb);
 }
-void pcb_link() {
-
-}
-
-void mm_write(MM_Slice ms, int pos) {
-        if (pos >= MM_SIZE) {
-                exit(1);
+void move_pcb(PCB *dest, PCB *src, int pos) {
+        if (pos == HEAD) {
+                src->next = dest->next;
+                dest      = src;
+                return;
         }
-        mm[pos] = ms;
+        dest->next = src;
+        dest       = src;
 }
 
-MM_Slice mm_read(int pos) {
-        if (pos >= MM_SIZE) {
-                return NULL_CELL;
-        }
-        return mm[pos];
+void context_switch(Regs *dect, Regs *src) {
+        memcpy(dect, src, sizeof(Regs));
 }
-
-void load_regs(PCB *pcb) {
-        memcpy(&kernel->regs, &pcb->regs, sizeof(Regs));
-}
-void store_regs(PCB *pcb) {
-        memcpy(&pcb->regs, &kernel->regs, sizeof(Regs));
-}
-
+void dispatcher() {}
+void cpu_sched() {}
+void io_sched() {}
 void RR() {}

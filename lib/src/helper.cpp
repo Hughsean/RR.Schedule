@@ -9,13 +9,12 @@ extern "C" {
 #include "iostream"
 #include "random"
 #include "unistd.h"
-#include "json/json.h"
 //
 #define PRO_MAX_TIME 20
 #define PRO_MIN_TIME 5
 //
-Pro_d *pro_pool = nullptr;
-IO     io__[4]  = { NO, NET, DISK, USB };
+Pro_d    *pro_pool = nullptr;
+static IO io_[4]   = { NO, NET, DISK };
 //
 void timer() {
 
@@ -32,14 +31,13 @@ void keyboard() {
         fd_set         fds, fds_;
         char           temp;
         struct timeval tv {};
-        int            ch = 0;
 
         FD_ZERO(&fds);
         FD_SET(0, &fds);
 
         while (true) {
                 tv.tv_sec  = 0;
-                tv.tv_usec = 300000;
+                tv.tv_usec = CLOCK_TIME;
                 fds_       = fds;
                 if (kernel_entries()->power == 0) {
                         break;
@@ -83,23 +81,24 @@ void show_pcb(std::ostream &os, PCB *pcb) {
         os << std::endl;
 }
 void show_process(std::ostream &os, Process *pro) {
-        os << fmt::format("{:^12}", pro->time);
+        os << fmt::format("{:^12}", pro->time_need);
 }
 
 Process process_random_g() {
-        std::default_random_engine         e{ std::random_device{}() };
-        std::uniform_int_distribution<int> u{ 0, 1000 };
+        static std::default_random_engine         e{ std::random_device{}() };
+        static std::uniform_int_distribution<int> u{ 0, 1000 };
 
         Process p{
-                .time = u(e) % (PRO_MAX_TIME - PRO_MIN_TIME) + PRO_MIN_TIME,
-                .io   = io__[u(e) % IO_N],
+                .time_need = u(e) % (PRO_MAX_TIME - PRO_MIN_TIME) + PRO_MIN_TIME,
+                .io        = io_[u(e) % IO_N],
         };
         if (p.io != NO) {
 
-                p.io_point = u(e) % (p.time - PRO_MIN_TIME) + PRO_MIN_TIME;
+                p.io_point = u(e) % (p.time_need - PRO_MIN_TIME) + PRO_MIN_TIME;
         }
         else {
                 p.io_point = -1;
         }
+
         return p;
 }

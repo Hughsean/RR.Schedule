@@ -1,8 +1,6 @@
 #ifndef A_C_LIB_HELPER_H
 #define A_C_LIB_HELPER_H
 
-#include "iostream"
-
 typedef struct pro_d {
         Process pro;
         int     prt;
@@ -21,10 +19,9 @@ inline void clock_g() {
 }
 
 void print_tittle(std::ostream &os);
-void show_pcblist(std::ostream &os, PCB* pcb);
-void show_pcb(std::ostream &os,PCB* pcb);
-void show_process(std::ostream &os,Process* pro);
-
+void show_pcblist(std::ostream &os, PCB *pcb);
+void show_pcb(std::ostream &os, PCB *pcb);
+void show_process(std::ostream &os, Process *pro);
 
 Process process_random_g();
 

@@ -3,9 +3,10 @@ extern "C" {
 #include "core.h"
 }
 #include "fstream"
-#include "helper.h"
 #include "iostream"
 #include "json/json.h"
+#include "fmt/core.h"
+#include "helper.h"
 
 int main() {
         //        std::fstream fos;
@@ -31,23 +32,23 @@ int main() {
 }
 void f() {
         std::string filename = "./test/test.json";
-        // 1.æ‰“å¼€æ–‡ä»¶
+        // 1.´ò¿ªÎÄ¼ş
         std::ifstream ifile;
         ifile.open(filename);
         if (!ifile.is_open()) {
                 return;
         }
-        // 2.åˆ›å»ºjsonè¯»å·¥å‚å¯¹è±¡
+        // 2.´´½¨json¶Á¹¤³§¶ÔÏó
         Json::CharReaderBuilder ReaderBuilder;
-        // utf8æ”¯æŒï¼Œä¸åŠ è¿™å¥ï¼Œutf8çš„ä¸­æ–‡å­—ç¬¦ä¼šç¼–ç¨‹\uxxx
+        // utf8Ö§³Ö£¬²»¼ÓÕâ¾ä£¬utf8µÄÖĞÎÄ×Ö·û»á±à³Ì\uxxx
         ReaderBuilder["emitUTF8"] = true;
-        // 3.åˆ›å»ºjsonå¯¹è±¡ï¼Œç­‰ä¼šè¦è¿”å›è¿™ä¸ªå¯¹è±¡
+        // 3.´´½¨json¶ÔÏó£¬µÈ»áÒª·µ»ØÕâ¸ö¶ÔÏó
         Json::Value root;
-        // 4.æŠŠæ–‡ä»¶è½¬å˜ä¸ºjsonå¯¹è±¡ï¼Œè¦ç”¨åˆ°ä¸Šé¢çš„ä¸‰ä¸ªå˜é‡,æ•°æ®å†™å…¥root
+        // 4.°ÑÎÄ¼ş×ª±äÎªjson¶ÔÏó£¬ÒªÓÃµ½ÉÏÃæµÄÈı¸ö±äÁ¿,Êı¾İĞ´Èëroot
         std::string strerr;
         bool        ok = Json::parseFromStream(ReaderBuilder, ifile, &root, &strerr);
         if (!ok) {
-                std::cerr << "jsonè§£æé”™è¯¯";
+                std::cerr << "json½âÎö´íÎó";
         }
         std::cout << root.size();
         std::stoi("12");

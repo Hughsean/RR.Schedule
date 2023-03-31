@@ -13,13 +13,14 @@ const Kernel *kernel_entries() {
 void init() {
         signal(SIGINT, power_off);
         signal(SIGTERM, power_off);
-        signal(SIGALRM, irq_handler);
+        // todo
+        //        signal(SIGALRM, irq_handler);
 
         kernel = (Kernel *)malloc(sizeof(Kernel));
         memset(kernel, 0, sizeof(Kernel));
         kernel->power = 1;
 
-        pid_map = (char *)malloc(sizeof(char) * PID_MAX);
+        pid_map = (unsigned char *)malloc(sizeof(char) * PID_MAX);
         memset(pid_map, 0, sizeof(char) * PID_MAX);
 }
 void power_off(int _) {

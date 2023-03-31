@@ -1,6 +1,8 @@
 #ifndef A_C_LIB_HELPER_H
 #define A_C_LIB_HELPER_H
 
+#include "core.h"
+#include "iostream"
 typedef struct pro_d {
         Process pro;
         int     prt;

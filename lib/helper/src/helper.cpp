@@ -3,12 +3,13 @@
 extern "C" {
 #include "core.h"
 }
+#include "Windows.h"
 #include "csignal"
 #include "fmt/core.h"
 #include "helper.h"
+#include "io.h"
 #include "iostream"
 #include "random"
-#include "unistd.h"
 //
 #define PRO_MAX_TIME 20
 #define PRO_MIN_TIME 5
@@ -22,8 +23,9 @@ void timer() {
                 if (kernel_entries()->power == 0) {
                         break;
                 }
-                ualarm(CLOCK_TIME, CLOCK_TIME);
-                pause();
+                // TODO
+                //                ualarm(CLOCK_TIME, CLOCK_TIME);
+                //                pause();
         }
 }
 
@@ -42,19 +44,20 @@ void keyboard() {
                 if (kernel_entries()->power == 0) {
                         break;
                 }
-                if (select(1, &fds_, nullptr, nullptr, &tv) > 0) {
-                        read(0, &temp, 1);
-                        raise(SIGALRM);
-                }
+                // TODO
+                //                if (select(1, &fds_, nullptr, nullptr, &tv) > 0) {
+                //                        read(0, &temp, 1);
+                //                        raise(SIGALRM);
+                //                }
         }
 }
 
 void print_tittle(std::ostream &os) {
         os << fmt::format("{:^12}", "PID");
-        os << fmt::format("{:^12}", "çŠ¶æ€");
-        os << fmt::format("{:^12}", "ä¼˜å…ˆçº§");
-        os << fmt::format("{:^15}", "å·²è¿è¡Œæ—¶é—´");
-        os << fmt::format("{:^15}", "æ€»éœ€æ—¶é—´") << std::endl;
+        os << fmt::format("{:^12}", "×´Ì¬");
+        os << fmt::format("{:^12}", "ÓÅÏÈ¼¶");
+        os << fmt::format("{:^15}", "ÒÑÔËÐÐÊ±¼ä");
+        os << fmt::format("{:^15}", "×ÜÐèÊ±¼ä") << std::endl;
 }
 
 void show_pcblist(std::ostream &os, PCB *pcb) {

@@ -6,13 +6,12 @@
 static Kernel        *kernel  = NULL;
 static unsigned char *pid_map = NULL;
 //
-
 const Kernel *kernel_entries() {
         return kernel;
 }
 void init() {
-        signal(SIGINT, power_off);
         signal(SIGTERM, power_off);
+        signal(SIGINT, irq_handler);
         // todo
         //        signal(SIGALRM, irq_handler);
 
@@ -23,9 +22,11 @@ void init() {
         pid_map = (unsigned char *)malloc(sizeof(char) * PID_MAX);
         memset(pid_map, 0, sizeof(char) * PID_MAX);
 }
+
 void power_off(int _) {
         kernel->power = 0;
 }
+
 void irq_handler(int signal) {
 
         RR();

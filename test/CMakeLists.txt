@@ -12,6 +12,6 @@ target_link_libraries(
         PRIVATE lib::core
         PRIVATE lib::helper
         #        PRIVATE core
-        PRIVATE fmt::fmt
+        PRIVATE fmt::fmt-header-only
         PRIVATE JsonCpp::JsonCpp
 )

@@ -1,24 +1,30 @@
 project(helper LANGUAGES CXX)
 
-aux_source_directory(./src SL)
-aux_source_directory(./inc HL)
-add_library(helper STATIC ${SL} ${HL})
+#aux_source_directory(./src SL)
+#aux_source_directory(./inc HL)
+
+add_library(
+        helper SHARED
+        inc/helper.h
+        src/clock_g.cpp
+        src/out.cpp
+        src/process_g.cpp
+)
 
 add_library(lib::helper ALIAS helper)
-#target_link_libraries(main PRIVATE fmt::fmt)
-#find_package(jsoncpp CONFIG REQUIRED)
-#find_library(libcore oscore ../)
-#find_library(core core ../)
+
+
 find_package(fmt CONFIG REQUIRED)
+
+
 target_link_libraries(
         helper
-        PRIVATE fmt::fmt
+        PRIVATE fmt::fmt-header-only
         PRIVATE lib::core
 )
-#target_link_directories(${PROJECT_NAME} PRIVATE jsoncpp)
+
 target_include_directories(
         helper
         PRIVATE lib::core
         PUBLIC ./inc
-        #        PRIVATE core
 )

@@ -4,7 +4,7 @@ project(helper LANGUAGES CXX)
 #aux_source_directory(./inc HL)
 
 add_library(
-        helper SHARED
+        helper STATIC
         inc/helper.h
         src/clock_g.cpp
         src/out.cpp

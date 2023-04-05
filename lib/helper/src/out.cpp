@@ -6,10 +6,10 @@
 
 void print_tittle(std::ostream &os) {
         os << fmt::format("{:^12}", "PID");
-        os << fmt::format("{:^12}", "×´Ì¬");
-        os << fmt::format("{:^12}", "ÓÅÏÈ¼¶");
-        os << fmt::format("{:^15}", "ÒÑÔËÐÐÊ±¼ä");
-        os << fmt::format("{:^15}", "×ÜÐèÊ±¼ä") << std::endl;
+        os << fmt::format("{:^12}", "çŠ¶æ€");
+        os << fmt::format("{:^12}", "ä¼˜å…ˆçº§");
+        os << fmt::format("{:^15}", "å·²è¿è¡Œæ—¶é—´");
+        os << fmt::format("{:^15}", "æ€»éœ€æ—¶é—´") << std::endl;
 }
 
 void show_pcblist(std::ostream &os, PCB *pcb) {

@@ -2,7 +2,7 @@
 // Created by xSeung on 2023/3/31.
 //
 extern "C" {
-#include "core.h"
+#include "preinclude.h"
 }
 #include "conio.h"
 #include "csignal"
@@ -28,8 +28,8 @@ void keyboard() {
                                 break;
                         }
                         if (ch == ' ') {
-                                std::cout << "irq\n";
-                                std::cout.flush();
+//                                std::wcout << L"irq, 测试\n";
+//                                std::wcout.flush();
                         }
                 }
         }

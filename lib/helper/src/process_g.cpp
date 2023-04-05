@@ -1,10 +1,8 @@
 #define CLOCK_TIME 400000
 
 extern "C" {
-#include "core.h"
+#include "preinclude.h"
 }
-#include "conio.h"
-#include "csignal"
 #include "helper.h"
 #include "iostream"
 #include "random"
@@ -15,9 +13,6 @@ extern "C" {
 Pro_d    *pro_pool = nullptr;
 static IO io_[4]   = { NO, NET, DISK };
 //
-
-
-
 
 Process process_random_g() {
         static std::default_random_engine         e{ std::random_device{}() };

@@ -1,6 +1,6 @@
 #define KB
 extern "C" {
-#include "core.h"
+#include "kernel.h"
 }
 #include "fmt/core.h"
 #include "fstream"
@@ -9,9 +9,10 @@ extern "C" {
 #include "json/json.h"
 
 int main() {
-        system("chcp 65001");
-        system("pause");
-        init();
-
-        clock_g();
+        //        system("chcp 65001");
+        //        system("pause");
+        //        init();
+        std::wcout << L"irq, 测试\n";
+        std::wcout.flush();
+        //        clock_g();
 }

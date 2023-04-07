@@ -12,7 +12,6 @@ int main() {
         //        system("chcp 65001");
         //        system("pause");
         //        init();
-        std::wcout << L"irq, 测试\n";
-        std::wcout.flush();
+
         //        clock_g();
 }

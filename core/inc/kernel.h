@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by xSeung on 2023/4/5.
 //
 
@@ -17,8 +17,6 @@ typedef struct kernel_ {
         PCB_Queue ready_queue;     // 就绪队列
         PCB_Queue block_queue;     // IO阻塞队列
         PCB_Queue fallback_queue;  // 后备队列
-                                   // PCB* block_p_tail;
-                                   // 阻塞队列尾
         Regs regs;                 // 寄存器组
         int  current_clock;        // 当前系统周期
         int  power;                // 系统使能信号

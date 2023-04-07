@@ -18,7 +18,7 @@ add_library(lib::core ALIAS core)
 
 target_include_directories(
         core
-        PUBLIC ./inc
+        PUBLIC inc
         #        PRIVATE ./inc
 )
 #message(${PROJECT_NAME})

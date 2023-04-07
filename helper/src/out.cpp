@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by xSeung on 2023/3/31.
 //
 #include "fmt/core.h"
@@ -29,8 +29,8 @@ void show_pcblist(std::ostream &os, PCB *pcb) {
 }
 void show_pcb(std::ostream &os, PCB *pcb) {
         os << fmt::format("{:^12}", pcb->pid);
-        os << fmt::format("{:^12}", pcb->state);
-        os << fmt::format("{:^12}", pcb->prt);
+        os << fmt::format("{:^12}", static_cast<int>(pcb->state));
+        os << fmt::format("{:^12}", static_cast<int>(pcb->prt));
         os << fmt::format("{:^12}", pcb->run_time);
         show_process(os, pcb->pro);
         os << std::endl;

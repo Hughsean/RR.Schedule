@@ -1,7 +1,7 @@
 #define CLOCK_TIME 400000
 
 extern "C" {
-#include "preinclude.h"
+#include "core.h"
 }
 #include "helper.h"
 #include "iostream"

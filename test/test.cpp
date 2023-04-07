@@ -1,17 +1,18 @@
 #define KB
 extern "C" {
-#include "kernel.h"
+#include "core.h"
 }
-#include "fmt/core.h"
-#include "fstream"
-#include "helper.h"
+
 #include "iostream"
-#include "json/json.h"
+
+void fun0() {
+        std::cout << "fun0\n";
+}
+void fun1() {}
 
 int main() {
-        //        system("chcp 65001");
-        //        system("pause");
-        //        init();
+        init();
+        //        kernel_entrance()->iv.fun[0]();
 
-        //        clock_g();
+        std::cout << "1";
 }

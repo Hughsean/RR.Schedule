@@ -12,13 +12,14 @@ add_library(
         src/kernel.c
         src/cpu.c
         src/process.c
-        inc/preinclude.h)
+#        pub/preinclude.h
+)
 
 add_library(lib::core ALIAS core)
 
 target_include_directories(
         core
-        PUBLIC inc
-        #        PRIVATE ./inc
+        PUBLIC ./pub
+        PRIVATE ./inc
 )
 #message(${PROJECT_NAME})

@@ -2,7 +2,6 @@
 // Created by xSeung on 2023/4/5.
 //
 #include "global_define.h"
-
 static unsigned char pid_map[PID_MAX];
 
 int pid_alloc() {
@@ -20,6 +19,7 @@ int pid_alloc() {
         }
         return 0;
 }
+
 void pid_free(int pid) {
         pid        = pid - 1;
         int r      = pid % 8;

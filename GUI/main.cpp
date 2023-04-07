@@ -1,11 +1,16 @@
-//
-// Created by xSeung on 2023/4/7.
-//
-// int main() {}
 #include "QApplication"
+#include "QPushButton"
+#include "ui/window.h"
 
-int main(int argc, char** args) {
-        QApplication a(argc, args);
+int main(int argc, char *argv[]) {
 
+        QApplication a(argc, argv);
+        auto         b = new ui::window;
+        auto         c = b->findChild<QPushButton *>();
+
+        if (c!= nullptr){
+        }
+
+        b->show();
         return QApplication::exec();
 }

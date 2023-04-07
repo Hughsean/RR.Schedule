@@ -2,7 +2,7 @@
 // Created by xSeung on 2023/3/31.
 //
 extern "C" {
-#include "preinclude.h"
+#include "core.h"
 }
 #include "conio.h"
 #include "csignal"
@@ -10,7 +10,7 @@ extern "C" {
 void timer() {
 
         while (true) {
-                if (kernel_entries()->power == 0) {
+                if (kernel_entrance()->power == 0) {
                         break;
                 }
                 // TODO
@@ -22,8 +22,8 @@ void timer() {
 void keyboard() {
         int ch{};
         while (true) {
-                if (kbhit()) {
-                        ch = getch();
+                if (_kbhit()) {
+                        ch = _getch();
                         if (ch == 'q') {
                                 break;
                         }

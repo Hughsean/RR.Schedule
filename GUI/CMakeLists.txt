@@ -4,18 +4,22 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+
 find_package(
-        Qt6 COMPONENTS
-        Core
-        Gui
-        Widgets
+        Qt6
+        COMPONENTS Core
+        COMPONENTS Gui
+        COMPONENTS Widgets
         REQUIRED
 )
 
 add_executable(
         GUI
         main.cpp
-        ui/window.cpp ui/window.h ui/window.ui)
+        ./ui/window.cpp
+        ./ui/window.h
+        ./ui/window.ui
+)
 
 target_link_libraries(
         GUI

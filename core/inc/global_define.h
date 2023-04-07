@@ -12,4 +12,5 @@
 #define REG_NUM     2   //
 #define CPU_N       1   //
 #define RR_SLICE    3   // RR时间片
+#define IRQ_N       3   // 中断表中断个数
 #endif                  // OS_CD_GLOBAL_DEFINE_H

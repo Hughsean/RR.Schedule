@@ -5,12 +5,12 @@
 #ifndef OS_CD_PROCESS_H
 #define OS_CD_PROCESS_H
 
-#include "global_define.h"
 #include "cpu.h"
+#include "global_define.h"
+
 typedef enum io_ { NO, NET, DISK, USB } IO;
 typedef enum state_ { RUNNING, READY, WAITING, FB } STATE;
 typedef enum priority_ { L, M, H } Priority;
-
 
 typedef struct pi_ {
         int time_need;  // 进程运行结束需要的时间
@@ -32,8 +32,7 @@ typedef struct pcb_ {
 
 // pid分配器
 int pid_alloc();
-// pid回收
+// pid回收器
 void pid_free(int pid);
-
 
 #endif  // OS_CD_PROCESS_H

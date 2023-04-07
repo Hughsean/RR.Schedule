@@ -1,15 +1,16 @@
 project(OS.CD)
 cmake_minimum_required(VERSION 3.25)
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 17)
 #add_definitions(-DCMAKE_TOOLCHAIN_FILE=D:\\Dev\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake)
 #set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_BUILD_TYPE Release)
+add_subdirectory(./GUI)
+add_subdirectory(./test)
+
+
 add_subdirectory(./core)
 add_subdirectory(./helper)
 
-add_subdirectory(./test)
-add_subdirectory(./GUI)
 #if (MSVC)
 #endif ()

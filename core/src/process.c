@@ -1,28 +1,27 @@
-//
+﻿//
 // Created by xSeung on 2023/4/5.
 //
 #include "global_define.h"
-static unsigned char pid_map[PID_MAX];
+
+static unsigned char pid_map[PID_BITMAP_BYTE];
 
 int pid_alloc() {
-        unsigned char i = 1;
-        unsigned char ii;
-
-        for (int j = 0; j < PID_MAX; ++j) {
-                for (int k = 0; k < 8; ++k) {
-                        ii = i << k;
-                        if ((pid_map[j] & ii) == 0) {
-                                pid_map[j] = pid_map[j] | ii;
-                                return k + 8 * j + 1;
+        unsigned char bitmask;
+        for (int line = 0; line < PID_BITMAP_BYTE; ++line) {
+                for (int row = 0; row < 8; ++row) {
+                        bitmask = 0x01 << row;
+                        if ((pid_map[line] & bitmask) == 0) {
+                                pid_map[line] = pid_map[line] | bitmask;
+                                return row + 8 * line + 1;
                         }
                 }
         }
-        return 0;
+        return -1;
 }
 
 void pid_free(int pid) {
-        pid        = pid - 1;
-        int r      = pid % 8;
-        int l      = pid / 8;
-        pid_map[l] = pid_map[l] & ~(1 << r);
+        pid           = pid - 1;
+        int row       = pid % 8;
+        int line      = pid / 8;
+        pid_map[line] = pid_map[line] & ~(1 << row);
 }

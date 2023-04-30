@@ -1,10 +1,8 @@
 ﻿project(core LANGUAGES C)
 
-#aux_source_directory(./src SL)
-#aux_source_directory(./inc HL)
 
 add_library(
-        core STATIC
+        ${PROJECT_NAME}
         inc/global_define.h
         inc/process.h
         inc/cpu.h
@@ -12,14 +10,15 @@ add_library(
         src/kernel.c
         src/cpu.c
         src/process.c
-#        pub/preinclude.h
+        inc/io.h
+        src/io.c
+        pub/core.h
 )
 
-add_library(lib::core ALIAS core)
+add_library(lib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_include_directories(
         core
         PUBLIC ./pub
         PRIVATE ./inc
 )
-#message(${PROJECT_NAME})

@@ -1,20 +1,20 @@
-//
-// Created by xSeung on 2023/4/7.
+﻿//
+// Created by xSeung on 2023/4/30.
 //
 
 #ifndef OS_CD_WINDOW_H
 #define OS_CD_WINDOW_H
 
-#include <QMainWindow>
+#include <QWidget>
 
-namespace ui {
+namespace oscd {
         QT_BEGIN_NAMESPACE
         namespace Ui {
                 class window;
         }
         QT_END_NAMESPACE
 
-        class window : public QMainWindow {
+        class window : public QWidget {
                 Q_OBJECT
 
             public:
@@ -24,6 +24,6 @@ namespace ui {
             private:
                 Ui::window *ui;
         };
-}  // namespace ui
+}  // namespace oscd
 
 #endif  // OS_CD_WINDOW_H

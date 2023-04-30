@@ -4,12 +4,12 @@ project(helper LANGUAGES CXX)
 #aux_source_directory(./inc HL)
 
 add_library(
-        helper STATIC
+        helper
         inc/helper.h
         src/clock_g.cpp
         src/out.cpp
         src/process_g.cpp
-)
+        inc/process_helper.h src/process_helper.cpp inc/log.h src/log.cpp)
 
 add_library(lib::helper ALIAS helper)
 

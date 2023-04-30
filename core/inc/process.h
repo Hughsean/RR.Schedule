@@ -8,31 +8,48 @@
 #include "cpu.h"
 #include "global_define.h"
 
-typedef enum io_ { NO, NET, DISK, USB } IO;
-typedef enum state_ { RUNNING, READY, WAITING, FB } STATE;
-typedef enum priority_ { L, M, H } Priority;
+// typedef enum io_ { NO, NET, DISK, USB } IO;
+typedef enum state_ {
+        RUNNING,  // 运行状态
+        READY,    // 就绪状态
+        WAITING,  // 阻塞状态
+} PRO_STATE;
 
-typedef struct pi_ {
-        int time_need;  // 进程运行结束需要的时间
-        IO  io;         // 执行IO的种类
-        int io_point;   // 执行IO的时间点
-} Process;
+// typedef enum priority_ {
+//         L,  //
+//         M,
+//         H
+// } Priority;
+
+typedef struct address_space_ {
+        unsigned  length;
+        unsigned* p;
+
+} Address_Space;
+
+// typedef struct pi_ {
+//         int time_need;  // 进程运行结束需要的时间
+// } Process;
 
 typedef struct pcb_ {
-        int          pid;          // 进程ID号
-        Priority     prt;          // 优先级
-        int          run_time;     // 进程已运行时间
-        int          io_run_time;  // io已运行时间
-        STATE        state;        // 进程状态
-        Regs         regs;         // 现场保护
-        Process*     pro;          // 进程信息
-        struct pcb_* next;
+        int           pid;       // 进程ID号
+        int           run_time;  // 进程已运行时间
+        int           io_time;   // io已运行时间
+        Regs          regs;      // 现场保护
+        PRO_STATE     state;     // 进程状态
+        Address_Space as;        // 进程地址空间
+        struct pcb_*  next;
+        //        Process*      pro;       // 进程信息
+        //        Priority      prt;          // 优先级
         //        struct pcb_* pre;
 } PCB;
 
-// pid分配器
+/// \brief 分配PID
 int pid_alloc();
-// pid回收器
+/// \brief 回收PID
+/// \param pid 回收的PID
 void pid_free(int pid);
+
+void progressload();
 
 #endif  // OS_CD_PROCESS_H

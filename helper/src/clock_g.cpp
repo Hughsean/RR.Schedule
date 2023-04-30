@@ -10,9 +10,7 @@ extern "C" {
 void timer() {
 
         while (true) {
-                if (kernel_entrance()->power == 0) {
-                        break;
-                }
+                break;
                 // TODO
                 //                ualarm(CLOCK_TIME, CLOCK_TIME);
                 //                pause();
@@ -28,8 +26,9 @@ void keyboard() {
                                 break;
                         }
                         if (ch == ' ') {
-//                                std::wcout << L"irq, 测试\n";
-//                                std::wcout.flush();
+                                //                                std::wcout << L"irq,
+                                //                                测试\n";
+                                //                                std::wcout.flush();
                         }
                 }
         }

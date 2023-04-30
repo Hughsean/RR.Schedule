@@ -5,11 +5,11 @@
 #include "helper.h"
 
 void print_tittle(std::ostream &os) {
-        os << fmt::format("{:^12}", "PID");
-        os << fmt::format("{:^12}", "状态");
-        os << fmt::format("{:^12}", "优先级");
-        os << fmt::format("{:^15}", "已运行时间");
-        os << fmt::format("{:^15}", "总需时间") << std::endl;
+//        os << fmt::format("{:^12}", "PID");
+//        os << fmt::format("{:^12}", "状态");
+//        os << fmt::format("{:^12}", "优先级");
+//        os << fmt::format("{:^15}", "已运行时间");
+//        os << fmt::format("{:^15}", "总需时间") << std::endl;
 }
 
 void show_pcblist(std::ostream &os, PCB *pcb) {
@@ -28,13 +28,13 @@ void show_pcblist(std::ostream &os, PCB *pcb) {
         }
 }
 void show_pcb(std::ostream &os, PCB *pcb) {
-        os << fmt::format("{:^12}", pcb->pid);
-        os << fmt::format("{:^12}", static_cast<int>(pcb->state));
-        os << fmt::format("{:^12}", static_cast<int>(pcb->prt));
-        os << fmt::format("{:^12}", pcb->run_time);
-        show_process(os, pcb->pro);
-        os << std::endl;
+//        os << fmt::format("{:^12}", pcb->pid);
+//        os << fmt::format("{:^12}", static_cast<int>(pcb->state));
+////        os << fmt::format("{:^12}", static_cast<int>(pcb->prt));
+//        os << fmt::format("{:^12}", pcb->run_time);
+//        show_process(os, pcb->pro);
+//        os << std::endl;
 }
 void show_process(std::ostream &os, Process *pro) {
-        os << fmt::format("{:^12}", pro->time_need);
+//        os << fmt::format("{:^12}", pro->time_need);
 }

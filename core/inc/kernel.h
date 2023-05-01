@@ -26,8 +26,8 @@ void int_handler();
 ///\return 返回内核数据
 const Kernel* kernel_entrance();
 ///\brief 内核初始化
-void init();
-
+void system_init();
+void progressload(Address_Space as,int io_time_required);
 void RR();
-
+void run();
 #endif  // OS_CD_KERNEL_H

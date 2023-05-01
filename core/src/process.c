@@ -1,9 +1,9 @@
 ﻿//
 // Created by xSeung on 2023/4/5.
 //
-#include "global_define.h"
-
+#include "process.h"
 static unsigned char pid_map[PID_BITMAP_BYTE];
+
 
 int pid_alloc() {
         unsigned char bitmask;

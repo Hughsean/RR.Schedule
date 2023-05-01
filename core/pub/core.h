@@ -6,10 +6,10 @@
 #define OS_CD_CORE_H
 // #include "cpu.h"
 // #include "global_define.h"
-#include "../inc/cpu.h"
+// #include "../inc/cpu.h"
 #include "../inc/global_define.h"
-#include "../inc/io.h"
+// #include "../inc/io.h"
 #include "../inc/kernel.h"
-#include "../inc/process.h"
-// #include
+// #include "../inc/process.h"
+//  #include
 #endif  // OS_CD_CORE_H

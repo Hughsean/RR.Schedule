@@ -10,7 +10,6 @@ target_link_libraries(
         test
         PRIVATE lib::core
         PRIVATE lib::helper
-        #        PRIVATE core
         PRIVATE fmt::fmt-header-only
         PRIVATE JsonCpp::JsonCpp
 )

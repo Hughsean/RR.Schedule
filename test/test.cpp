@@ -7,20 +7,27 @@ extern "C" {
 #include "fstream"
 #include "iostream"
 #include "json/json.h"
-
 auto main() -> int {
-        int p[50]{ 0 };
-        for (int i = 0; i < 25; ++i) {
-                p[i] = pid_alloc();
+        Json::Value   root;
+        std::ifstream infs(R"(D:\WorkSpace\OS.CD\test\test.json)", std::ios::binary);
+        Json::Reader  reader;
+        Address_Space as;
+        int           io_time_required;
+        if (reader.parse(infs, root)) {
+                auto p           = root[0]["address_space"];
+                io_time_required = root[0]["io_time_required"].asInt();
+                as.length        = p.size();
+                as.p             = (int *)malloc(sizeof(int) * as.length);
+                int n            = 0;
+                for (auto i = p.begin(); i != p.end(); i++) {
+                        as.p[n] = i->asInt();
+                        n++;
+                }
         }
-        for (int i = 0; i < 15; ++i) {
-                pid_free(p[i]);
-                p[i] = -1;
-        }
-        for (int i = 25; i < 50; ++i) {
-                p[i] = pid_alloc();
-        }
-        for (int i = 0; i < 50; ++i) {
-                std::cout << p[i] << std::endl;
+        system_init();
+        progressload(as, io_time_required);
+        PCB *pcb = kernel_entrance()->ready_queue.head;
+        while (true) {
+                run();
         }
 }

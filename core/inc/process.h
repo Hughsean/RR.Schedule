@@ -22,9 +22,8 @@ typedef enum state_ {
 // } Priority;
 
 typedef struct address_space_ {
-        unsigned  length;
-        unsigned* p;
-
+        unsigned int length;
+        int*         p;
 } Address_Space;
 
 // typedef struct pi_ {
@@ -32,12 +31,13 @@ typedef struct address_space_ {
 // } Process;
 
 typedef struct pcb_ {
-        int           pid;       // 进程ID号
-        int           run_time;  // 进程已运行时间
-        int           io_time;   // io已运行时间
-        Regs          regs;      // 现场保护
-        PRO_STATE     state;     // 进程状态
-        Address_Space as;        // 进程地址空间
+        int           pid;               // 进程ID号
+        int           cpu_time;          // 进程已运行时间
+        int           io_time;           // io已运行时间
+        int           io_time_required;  // 需要的io时间
+        Regs          regs;              // 现场保护
+        PRO_STATE     state;             // 进程状态
+        Address_Space as;                // 进程地址空间
         struct pcb_*  next;
         //        Process*      pro;       // 进程信息
         //        Priority      prt;          // 优先级
@@ -49,7 +49,5 @@ int pid_alloc();
 /// \brief 回收PID
 /// \param pid 回收的PID
 void pid_free(int pid);
-
-void progressload();
 
 #endif  // OS_CD_PROCESS_H

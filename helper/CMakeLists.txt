@@ -5,11 +5,11 @@ project(helper LANGUAGES CXX)
 
 add_library(
         helper
-        inc/helper.h
-        src/clock_g.cpp
-        src/out.cpp
-        src/process_g.cpp
-        inc/process_helper.h src/process_helper.cpp inc/log.h src/log.cpp)
+
+        inc/process_h.h
+        inc/log.h
+        src/log.cpp
+        src/process_h.cpp)
 
 add_library(lib::helper ALIAS helper)
 

@@ -26,33 +26,29 @@ void context_write(const Regs *src, Regs *tgt) {
         *tgt = *src;
         //        memcpy(tgt, src, sizeof(Regs));
 }
-void io_irq(int did) {
-        cpu.io_bus[did] = 1;
+void io_irq(unsigned int did) {
+        cpu.io_bus = cpu.io_bus | ((unsigned int)1 << did);
 }
 void regs_reset() {
         memset(&cpu.user_regs, 0, sizeof(Regs));
 }
 
 void cpu_run() {
-        iv.fun[CLK]();                           // 先响应时钟中断
-        for (int i = 0; i < IO_DEVICE_N; ++i) {  // 响应IO中断
-                if (cpu.io_bus[i] != 0) {
-                        iv.fun[IO]();
-                        cpu.io_bus[0] = 0;  // 中断信号置0
-                        cpu.io_bus[1] = 0;
-                        break;
-                }
+        iv.fun[CLK]();  // 响应时钟中断
+        if (cpu.io_bus != 0) {
+                iv.fun[IO]();
+                cpu.io_bus = 0;
         }
         if (cpu.user_regs.br == (void *)0) {
                 return;
         }
 
-        int *inst         = cpu.user_regs.br;
+        int *br           = cpu.user_regs.br;
         int  pc           = cpu.user_regs.pc;
-        int  op           = inst[pc];
-        int  r1           = inst[pc + 1];
-        int  r2           = inst[pc + 2];
-        int  r3           = inst[pc + 3];
+        int  op           = br[pc];
+        int  r1           = br[pc + 1];
+        int  r2           = br[pc + 2];
+        int  r3           = br[pc + 3];
         cpu.user_regs.pc += 4;
         // 执行指令
         switch (op) {
@@ -75,6 +71,8 @@ void cpu_run() {
         case 4:
                 //
                 iv.fun[INT]();
+                break;
+        default:
                 break;
         }
 }

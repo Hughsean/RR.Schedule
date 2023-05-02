@@ -21,5 +21,5 @@ typedef struct io_devide_ {
 void             io_post(int id, int time_required, int pid, int *pro_io_time);
 void             io_run();
 const IO_Device *ioDevice_entrance(int id);
-void io_init();
+void             io_init();
 #endif  // OS_CD_IO_H

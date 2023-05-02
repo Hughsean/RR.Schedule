@@ -14,12 +14,12 @@
  * op=4, int : cpu.ur[0](r0)与cpu.ur[1](r1)传递参数, 调用iv[INT]中断函数.
  * r0=0:认为IO调用, 进程阻塞, 通过r1进行设备选择; r0=1: 认为进程退出
  */
-//typedef struct inst_ {
-//        int op;  ///< 操作码
-//        int r1;  ///< 目标寄存器号
-//        int r2;  ///< 源寄存器号/操作数
-//        int r3;  ///< 源寄存器号/操作数
-//} Inst;
+// typedef struct inst_ {
+//         int op;  ///< 操作码
+//         int r1;  ///< 目标寄存器号
+//         int r2;  ///< 源寄存器号/操作数
+//         int r3;  ///< 源寄存器号/操作数
+// } Inst;
 
 typedef struct regs_ {
         void *br;           // 基址地址寄存器
@@ -41,8 +41,9 @@ typedef struct iv_ {
 } Irq_Vector;
 
 typedef struct cpu_ {
-        Regs user_regs;            // 寄存器组
-        int  io_bus[IO_DEVICE_N];  // io中断信号及id
+        Regs user_regs;  // 寄存器组
+        int  io_bus;     // io中断信号及id
+
 } CPU;
 
 ////////////////////////////////////
@@ -56,9 +57,9 @@ void IV_Overwrite(int id, void (*fun)());
 void context_write(const Regs *src, Regs *tgt);
 /// \return CPU数据指针
 const CPU *cpu_entrance();
-void       io_irq(int did);
+void       io_irq(unsigned int did);
 void       regs_reset();
 /// \brief CPU执行一个用户周期
 void cpu_run();
-void  cpu_init();
+void cpu_init();
 #endif  // OS_CD_CPU_H

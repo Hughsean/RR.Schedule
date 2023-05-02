@@ -2,8 +2,9 @@
 // Created by xSeung on 2023/4/5.
 //
 #include "process.h"
-static unsigned char pid_map[PID_BITMAP_BYTE];
+#include "stdlib.h"
 
+static unsigned char pid_map[PID_BITMAP_BYTE];
 
 int pid_alloc() {
         unsigned char bitmask;
@@ -16,7 +17,8 @@ int pid_alloc() {
                         }
                 }
         }
-        return -1;
+        abort();
+        // return -1;
 }
 
 void pid_free(int pid) {
@@ -24,4 +26,18 @@ void pid_free(int pid) {
         int row       = pid % 8;
         int line      = pid / 8;
         pid_map[line] = pid_map[line] & ~(1 << row);
+}
+Address_Space AddressSpace_alloc(unsigned int length) {
+        Address_Space as;
+        as.p      = (int*)malloc(sizeof(int) * length);
+        as.length = length;
+        return as;
+}
+
+void pcb_free(PCB** pcbptr) {
+        pid_free((*pcbptr)->pid);
+        free((*pcbptr)->as.p);
+        free((*pcbptr));
+        *pcbptr = NULL;
+        regs_reset();
 }

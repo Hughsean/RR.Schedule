@@ -30,7 +30,8 @@ void io_run() {
                 if (io_device[id].head->time == *io_device[id].head->pro_io_time) {
                         IO_Node *p = io_device[id].head;
                         //                io_device.completed_pid = io_device.head->pid;
-                        io_device[id].head = io_device[id].head->next;
+                        io_device[id].head = io_device[id].head->next;                            /* code */
+                        
                         io_device[id].pid  = p->pid;
                         free(p);
                         io_irq(id);  // 发出IO中断请求

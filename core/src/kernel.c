@@ -12,23 +12,22 @@ void queue_pushback(PCB_Queue* queue, PCB** pcb) {
         if (*pcb == NULL) {
                 return;
         }
-        if (queue->tail != NULL) {
+        if (queue->head != NULL) {
                 queue->tail->next = *pcb;
-                queue->tail       = queue->tail->next;
         }
         else {
                 queue->head = *pcb;
-                queue->tail = *pcb;
         }
-        *pcb = NULL;
+        queue->tail = *pcb;
+        *pcb        = NULL;
 }
 PCB* queue_frontpop(PCB_Queue* queue) {
         if (queue->head != NULL) {
                 PCB* pcb    = queue->head;
                 queue->head = queue->head->next;
-                if (queue->head == NULL) {
-                        queue->tail = NULL;
-                }
+                // if (queue->head == NULL) {
+                //         queue->tail = NULL;
+                // }
                 return pcb;
         }
         return NULL;
@@ -53,7 +52,7 @@ PCB* queue_fetch(PCB_Queue* queue, int pid) {
 }
 
 void clk_handler() {
-        kernel.clk++;
+        schedule();
         // if (cpu_entrance()->user_regs.br == NULL) {
         //         kernel.rr_time = 0;
         //         if (kernel.ready_queue.head != NULL) {
@@ -64,21 +63,18 @@ void clk_handler() {
         //                 kernel.execute_p->cpu_time++;
         //         }
         // }
+        kernel.clk++;
         if (cpu_entrance()->user_regs.br != NULL) {
-                kernel.rr_time--;
+                kernel.rr_time++;
                 if (kernel.execute_p != NULL) {
                         kernel.execute_p->cpu_time++;
                 }
         }
-        // else {
-        //         kernel.rr_time = 0;
-        // }
-        schedule();
 }
 
 void io_handler() {
         for (unsigned int i = 0; i < IO_DEVICE_N; ++i) {
-                unsigned int sel = (unsigned int)1 << i;
+                unsigned int sel = 0x01 << i;
                 if ((cpu_entrance()->io_bus & sel) == 0) {
                         continue;
                 }
@@ -105,8 +101,8 @@ void int_handler() {
                 pcb_free(&kernel.execute_p);
         }
         regs_reset();
-        kernel.rr_time = 0;  // int指令必定导致进程切换, rr时间片置0
-        schedule();
+        kernel.rr_time = RR_SLICE;  // int指令必定导致进程切换, rr时间片置0
+        // schedule();
 }
 
 const Kernel* kernel_entrance() {
@@ -118,6 +114,7 @@ void system_init() {
         cpu_init();
         io_init();
         memset(&kernel, 0, sizeof(Kernel));
+        kernel.rr_time = RR_SLICE;
         // 覆写中断向量表
         IV_Overwrite(CLK, clk_handler);
         IV_Overwrite(IO, io_handler);
@@ -142,7 +139,7 @@ void programload(Program program) {
 
 void schedule() {
         // 时间片未到, 不进行调度
-        if (kernel.rr_time > 0) {
+        if (kernel.rr_time < RR_SLICE) {
                 return;
         }
         if (kernel.ready_queue.head == NULL) {
@@ -159,13 +156,13 @@ void schedule() {
                 queue_pushback(&kernel.ready_queue, &kernel.execute_p);
         }
         // 时间片恢复
-        kernel.rr_time = RR_SLICE - 1;
+        kernel.rr_time = 0;
         // 就绪队列头部PCB移至CPU
         kernel.execute_p = queue_frontpop(&kernel.ready_queue);
         // PCB上下文写入CPU
         context_write(&kernel.execute_p->regs, cpu_reg);
         kernel.execute_p->state = RUNNING;
-        kernel.execute_p->cpu_time++;
+        // kernel.execute_p->cpu_time++;
 }
 void run() {
         cpu_run();

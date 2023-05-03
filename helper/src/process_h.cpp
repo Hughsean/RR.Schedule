@@ -33,12 +33,11 @@ namespace fox {
                         abort();
                 }
                 for (auto iter = root.begin(); iter != root.end(); iter++) {
-                        int io_time_required =
-                            iter->operator[]("io_time_required").asInt();
-                        int  arrive_time     = iter->operator[]("arrive_time").asInt();
-                        auto p               = iter->operator[]("address_space");
-                        unsigned int  length = p.size();
-                        Address_Space as     = AddressSpace_alloc(length);
+                        int  io_time_required = (*iter)["io_time_required"].asInt();
+                        int  arrive_time      = (*iter)["arrive_time"].asInt();
+                        auto p                = (*iter)["address_space"];
+                        unsigned int  length  = p.size();
+                        Address_Space as      = AddressSpace_alloc(length);
                         for (int i = 0; i < length; ++i) {
                                 as.p[i] = p[i].asInt();
                         }
@@ -46,9 +45,10 @@ namespace fox {
                                                .io_time_required = io_time_required,
                                                .arrive_time      = arrive_time });
                 }
-                std::sort(vec.begin(), vec.end(), [&](Program &l, Program &r) {
-                        return l.arrive_time < r.arrive_time;
-                });
+                std::sort(vec.begin(), vec.end(),
+                          [&](const Program &l, const Program &r) {
+                                  return l.arrive_time < r.arrive_time;
+                          });
                 return vec;
         }
 

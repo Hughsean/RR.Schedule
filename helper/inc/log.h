@@ -8,19 +8,21 @@ extern "C" {
 #include "core.h"
 };
 #include "iostream"
+#include "map"
 #include "string"
 
-namespace fox
-{
+namespace fox {
         using Info = struct info_ {
                 const Kernel    *kernel;
                 const CPU       *cpu;
                 const IO_Device *io_devide;
         };
 
+        using jsondict = std::map<std::string, std::string>;
+
         Info        infoFetch();
         void        log(std::ostream &os);
-        std::string format(const Info &info);
-        std::string translate(Info info);
+        jsondict    infoextract(const Info &info);
+        std::string translate(void *p, int pc);
 }  // namespace fox
 #endif  // OS_CD_LOG_H

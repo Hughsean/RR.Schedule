@@ -43,6 +43,7 @@ typedef struct iv_ {
 typedef struct cpu_ {
         Regs user_regs;  // 寄存器组
         int  io_bus;     // io中断信号及id
+        int  clk;
 
 } CPU;
 
@@ -58,6 +59,7 @@ void context_write(const Regs *src, Regs *tgt);
 /// \return CPU数据指针
 const CPU *cpu_entrance();
 void       io_irq(unsigned int did);
+void       clk_irq();
 void       regs_reset();
 /// \brief CPU执行一个用户周期
 void cpu_run();

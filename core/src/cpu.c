@@ -27,14 +27,21 @@ void context_write(const Regs *src, Regs *tgt) {
         //        memcpy(tgt, src, sizeof(Regs));
 }
 void io_irq(unsigned int did) {
-        cpu.io_bus = cpu.io_bus | ((unsigned int)1 << did);
+        cpu.io_bus = cpu.io_bus | (0x01 << did);
+}
+void clk_irq() {
+        cpu.clk = 1;
 }
 void regs_reset() {
         memset(&cpu.user_regs, 0, sizeof(Regs));
 }
 
 void cpu_run() {
-        iv.fun[CLK]();  // 响应时钟中断
+        if (cpu.clk != 0) {
+                iv.fun[CLK]();  // 响应时钟中断
+                cpu.clk = 0;
+        }
+
         if (cpu.io_bus != 0) {
                 iv.fun[IO]();
                 cpu.io_bus = 0;

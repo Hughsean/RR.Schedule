@@ -11,7 +11,6 @@ extern "C" {
 #include "vector"
 
 namespace fox {
-
         void                 programCommit(std::vector<Program> &queue);
         std::vector<Program> programVec(const std::string &FilePath);
 }  // namespace fox

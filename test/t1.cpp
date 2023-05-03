@@ -16,14 +16,20 @@ auto main() -> int {
                                          i.as.length / 4);
         }
         int i = 100;
+
         system_init();
+
         while (true) {
                 fox::programCommit(vec);
                 fox::log(std::cout);
+                if (i % CLKIRQ == 0) {
+                        clk_irq();
+                }
                 run();
                 if (--i == 0) {
                         break;
                         ;
                 }
         }
+        // std::cin.get();
 }

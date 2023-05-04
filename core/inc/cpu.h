@@ -43,7 +43,7 @@ typedef struct iv_ {
 typedef struct cpu_ {
         Regs user_regs;  // 寄存器组
         int  io_bus;     // io中断信号及id
-        int  clk;
+        int  clk_bus;
 
 } CPU;
 

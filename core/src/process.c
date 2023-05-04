@@ -21,7 +21,6 @@ int pid_alloc() {
                         }
                 }
         }
-        return -1;
         abort();
 }
 

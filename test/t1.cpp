@@ -9,27 +9,24 @@
 #include "process_h.h"
 #include "json/json.h"
 auto main() -> int {
+        int  i   = 100;
         auto vec = fox::programVec(R"(D:\WorkSpace\OS.CD\test\programs.jsonc)");
-        for (auto &&i : vec) {
-                std::cout << std::format("len {}; arr{}; req{}; insts:{}\n", i.as.length,
-                                         i.arrive_time, i.io_time_required,
-                                         i.as.length / 4);
-        }
-        int i = 100;
+        std::vector<fox::jsondict> dicts;
+        std::ofstream              ofs(R"(D:\WorkSpace\OS.CD\test\out.json)");
+        std::cout << fox::summary(vec) << std::endl;
 
         system_init();
-
         while (true) {
                 fox::programCommit(vec);
-                fox::log(std::cout);
                 if (i % CLKIRQ == 0) {
                         clk_irq();
                 }
-                run();
-                if (--i == 0) {
+                dicts.emplace_back(fox::log(std::cout));
+                cpu_run();
+                io_run();
+                if (fox::programFinish(vec)) {
                         break;
-                        ;
                 }
         }
-        // std::cin.get();
+        fox::jsonoutput(ofs, dicts);
 }

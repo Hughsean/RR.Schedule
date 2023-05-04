@@ -52,4 +52,10 @@ namespace fox {
                 return vec;
         }
 
+        bool programFinish(const std::vector<Program> &vec) {
+                auto p = kernel_entrance();
+                return p->execute_p == nullptr && p->block_queue.head == nullptr
+                       && p->ready_queue.head == nullptr && vec.size() == 0;
+        }
+
 }  // namespace fox

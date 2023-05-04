@@ -13,6 +13,7 @@ extern "C" {
 namespace fox {
         void                 programCommit(std::vector<Program> &queue);
         std::vector<Program> programVec(const std::string &FilePath);
+        bool                 programFinish(const std::vector<Program> &vec);
 }  // namespace fox
 
 #endif  // OS_CD_PROCESS_H_H

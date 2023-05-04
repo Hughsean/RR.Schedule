@@ -25,9 +25,6 @@ PCB* queue_frontpop(PCB_Queue* queue) {
         if (queue->head != NULL) {
                 PCB* pcb    = queue->head;
                 queue->head = queue->head->next;
-                // if (queue->head == NULL) {
-                //         queue->tail = NULL;
-                // }
                 return pcb;
         }
         return NULL;
@@ -53,16 +50,6 @@ PCB* queue_fetch(PCB_Queue* queue, int pid) {
 
 void clk_handler() {
         schedule();
-        // if (cpu_entrance()->user_regs.br == NULL) {
-        //         kernel.rr_time = 0;
-        //         if (kernel.ready_queue.head != NULL) {
-        //                 kernel.execute_p = queue_frontpop(&kernel.ready_queue);
-        //                 context_write(&kernel.execute_p->regs,
-        //                               (Regs*)&cpu_entrance()->user_regs);
-        //                 kernel.rr_time = RR_SLICE - 1;
-        //                 kernel.execute_p->cpu_time++;
-        //         }
-        // }
         kernel.clk++;
         if (cpu_entrance()->user_regs.br != NULL) {
                 kernel.rr_time++;
@@ -83,8 +70,15 @@ void io_handler() {
                 // WARNING: 正常情况下pcb不可能为NULL. 因为有IO中断请求, 说明阻塞队列有PCB
                 pcb->state = READY;
                 queue_pushback(&kernel.ready_queue, &pcb);
+                if (kernel.execute_p == NULL) {
+                        kernel.execute_p = queue_frontpop(&kernel.ready_queue);
+                        kernel.rr_time   = 1;
+                        context_write(&kernel.execute_p->regs,
+                                      (Regs*)&cpu_entrance()->user_regs);
+                }
         }
 }
+
 void int_handler() {
         unsigned char r0 = cpu_entrance()->user_regs.ur[0];
         unsigned char r1 = cpu_entrance()->user_regs.ur[1];
@@ -164,7 +158,7 @@ void schedule() {
         kernel.execute_p->state = RUNNING;
         // kernel.execute_p->cpu_time++;
 }
-void run() {
-        cpu_run();
-        io_run();
-};
+// void run() {
+//         cpu_run();
+//         io_run();
+// };

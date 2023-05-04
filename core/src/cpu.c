@@ -30,18 +30,17 @@ void io_irq(unsigned int did) {
         cpu.io_bus = cpu.io_bus | (0x01 << did);
 }
 void clk_irq() {
-        cpu.clk = 1;
+        cpu.clk_bus = 1;
 }
 void regs_reset() {
         memset(&cpu.user_regs, 0, sizeof(Regs));
 }
 
 void cpu_run() {
-        if (cpu.clk != 0) {
+        if (cpu.clk_bus != 0) {
                 iv.fun[CLK]();  // 响应时钟中断
-                cpu.clk = 0;
+                cpu.clk_bus = 0;
         }
-
         if (cpu.io_bus != 0) {
                 iv.fun[IO]();
                 cpu.io_bus = 0;

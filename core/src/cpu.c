@@ -24,7 +24,6 @@ void IV_Overwrite(int id, void (*fun)()) {
 
 void context_write(const Regs *src, Regs *tgt) {
         *tgt = *src;
-        //        memcpy(tgt, src, sizeof(Regs));
 }
 void io_irq(unsigned int did) {
         cpu.io_bus = cpu.io_bus | (0x01 << did);

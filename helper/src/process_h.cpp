@@ -28,28 +28,40 @@ namespace fox {
                 Json::Reader         reader;
                 std::ifstream        infs(FilePath, std::ios::binary);
                 std::vector<Program> vec;
+                Program              program;
+                if (!infs.good()) {
+                        std::cerr << "文件未打开\n";
+                        abort();
+                }
                 if (!Json::Reader().parse(infs, root)) {
-                        std::cerr << "Json 解析失败" << std::endl;
+                        std::cerr << "Json 解析失败\n";
                         abort();
                 }
                 for (auto iter = root.begin(); iter != root.end(); iter++) {
-                        int  io_time_required = (*iter)["io_time_required"].asInt();
-                        int  arrive_time      = (*iter)["arrive_time"].asInt();
-                        auto p                = (*iter)["address_space"];
-                        unsigned int  length  = p.size();
-                        Address_Space as      = AddressSpace_alloc(length);
-                        for (int i = 0; i < length; ++i) {
-                                as.p[i] = p[i].asInt();
+                        std::memset(&program, 0, sizeof(Program));
+                        auto p                   = (*iter)["address_space"];
+                        auto name                = (*iter)["name"].asString();
+                        auto aslength            = p.size();
+                        program.io_time_required = (*iter)["io_time_required"].asInt();
+                        program.arrive_time      = (*iter)["arrive_time"].asInt();
+                        program.as               = AddressSpace_alloc(aslength);
+                        std::memcpy(program.name, name.c_str(), name.size());
+                        for (int i = 0; i < aslength; ++i) {
+                                program.as.p[i] = p[i].asInt();
                         }
-                        vec.push_back(Program{ .as               = as,
-                                               .io_time_required = io_time_required,
-                                               .arrive_time      = arrive_time });
+                        vec.push_back(program);
                 }
                 std::sort(vec.begin(), vec.end(),
                           [&](const Program &l, const Program &r) {
                                   return l.arrive_time < r.arrive_time;
                           });
                 return vec;
+        }
+
+        bool programFinish(const std::vector<Program> &vec) {
+                auto p = kernel_entrance();
+                return p->execute_p == nullptr && p->block_queue.head == nullptr
+                       && p->ready_queue.head == nullptr && vec.size() == 0;
         }
 
 }  // namespace fox

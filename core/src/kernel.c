@@ -25,9 +25,6 @@ PCB* queue_frontpop(PCB_Queue* queue) {
         if (queue->head != NULL) {
                 PCB* pcb    = queue->head;
                 queue->head = queue->head->next;
-                // if (queue->head == NULL) {
-                //         queue->tail = NULL;
-                // }
                 return pcb;
         }
         return NULL;
@@ -53,16 +50,6 @@ PCB* queue_fetch(PCB_Queue* queue, int pid) {
 
 void clk_handler() {
         schedule();
-        // if (cpu_entrance()->user_regs.br == NULL) {
-        //         kernel.rr_time = 0;
-        //         if (kernel.ready_queue.head != NULL) {
-        //                 kernel.execute_p = queue_frontpop(&kernel.ready_queue);
-        //                 context_write(&kernel.execute_p->regs,
-        //                               (Regs*)&cpu_entrance()->user_regs);
-        //                 kernel.rr_time = RR_SLICE - 1;
-        //                 kernel.execute_p->cpu_time++;
-        //         }
-        // }
         kernel.clk++;
         if (cpu_entrance()->user_regs.br != NULL) {
                 kernel.rr_time++;
@@ -85,6 +72,7 @@ void io_handler() {
                 queue_pushback(&kernel.ready_queue, &pcb);
         }
 }
+
 void int_handler() {
         unsigned char r0 = cpu_entrance()->user_regs.ur[0];
         unsigned char r1 = cpu_entrance()->user_regs.ur[1];
@@ -124,7 +112,7 @@ void system_init() {
 void programload(Program program) {
         PCB* pcb = (PCB*)malloc(sizeof(PCB));
         memset(&pcb->regs, 0, sizeof(Regs));
-
+        memcpy(pcb->name, program.name, NAME_LENGTH);
         pcb->state            = READY;
         pcb->cpu_time         = 0;
         pcb->io_time          = 0;
@@ -162,9 +150,4 @@ void schedule() {
         // PCB上下文写入CPU
         context_write(&kernel.execute_p->regs, cpu_reg);
         kernel.execute_p->state = RUNNING;
-        // kernel.execute_p->cpu_time++;
 }
-void run() {
-        cpu_run();
-        io_run();
-};

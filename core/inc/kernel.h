@@ -16,7 +16,7 @@ typedef struct kernel_ {
         PCB*      execute_p;    ///< 执行队列
         PCB_Queue ready_queue;  ///< 就绪队列
         PCB_Queue block_queue;  ///< 阻塞队列
-        int       clk;     ///< 当前系统的用户周期
+        int       clk;          ///< 当前系统的用户周期
         int       rr_time;      ///< 本轮RR算法已用时间
 } Kernel;
 /// @brief 时钟中断响应
@@ -29,6 +29,6 @@ const Kernel* kernel_entrance();
 void system_init();
 void programload(Program program);
 void schedule();
-void run();
+// void run();
 
 #endif  // OS_CD_KERNEL_H

@@ -10,6 +10,7 @@ extern "C" {
 #include "iostream"
 #include "map"
 #include "string"
+#include "vector"
 
 namespace fox {
         using Info = struct info_ {
@@ -19,10 +20,11 @@ namespace fox {
         };
 
         using jsondict = std::map<std::string, std::string>;
-
+        std::string summary(const std::vector<Program> &vec);
         Info        infoFetch();
-        void        log(std::ostream &os);
+        jsondict    log(std::ostream &os);
         jsondict    infoextract(const Info &info);
         std::string translate(void *p, int pc);
+        void        jsonoutput(std::ostream &os, const std::vector<jsondict> &dicts);
 }  // namespace fox
 #endif  // OS_CD_LOG_H

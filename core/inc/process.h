@@ -24,17 +24,19 @@ typedef struct program_ {
         Address_Space as;                ///< 程序的代码与数据
         int           io_time_required;  ///< 程序完成IO所需时间
         int           arrive_time;       ///< 程序到达系统时间
+        char          name[NAME_LENGTH];
 } Program;
 
 typedef struct pcb_ {
-        int           pid;               ///< 进程ID号
-        int           cpu_time;          ///< 进程已运行时间
-        int           io_time;           ///< io已运行时间
-        int           io_time_required;  ///< 需要的io时间
-        Regs          regs;              ///< 现场保护
-        PRO_STATE     state;             ///< 进程状态
-        Address_Space as;                ///< 进程地址空间
-        struct pcb_*  next;              //
+        int           pid;                ///< 进程ID号
+        int           cpu_time;           ///< 进程已运行时间
+        int           io_time;            ///< io已运行时间
+        int           io_time_required;   ///< 需要的io时间
+        Regs          regs;               ///< 现场保护
+        PRO_STATE     state;              ///< 进程状态
+        Address_Space as;                 ///< 进程地址空间
+        char          name[NAME_LENGTH];  ///< 程序名称
+        struct pcb_*  next;               //
 } PCB;
 
 /// \brief 分配PID

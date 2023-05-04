@@ -5,21 +5,18 @@ project(helper LANGUAGES CXX)
 
 add_library(
         helper
-
         inc/process_h.h
         inc/log.h
         src/log.cpp
-        src/process_h.cpp)
-
+        src/process_h.cpp
+)
 add_library(lib::helper ALIAS helper)
 
-
-find_package(fmt CONFIG REQUIRED)
-
+find_package(jsoncpp CONFIG REQUIRED)
 
 target_link_libraries(
         helper
-        PRIVATE fmt::fmt-header-only
+        PRIVATE JsonCpp::JsonCpp
         PRIVATE lib::core
 )
 

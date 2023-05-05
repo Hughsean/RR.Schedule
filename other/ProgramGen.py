@@ -88,13 +88,16 @@ if __name__ == "__main__":
         movi 0 1    //[0]=1
         int         //exit
         """
-    a = Program("A", inst1, 7, 14)
+    a = Program("A", inst1, 7, 8)
     b = Program("B", inst2, 5, 0)
     c = Program("C", inst3, 8, 15)
-    d = Program("D", inst3, 3, 17)
-    e = Program("E", inst2, 5, 12)
+    d = Program("D", inst3, 3, 20)
+    e = Program("E", inst2, 5, 3)
+    f = Program("F", inst1, 10, 11)
 
     # s2预期结果: 0-7寄存器: 1,1,80,20,20,0,0,60
-    outjson = ec().encode([a.todict(), b.todict(), c.todict(), d.todict(), e.todict()])
+    outjson = ec().encode(
+        [a.todict(), b.todict(), c.todict(), d.todict(), e.todict(), f.todict()]
+    )
     with open("test/programs.jsonc", "w") as out:
         out.write(outjson)

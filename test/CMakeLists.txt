@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(T)
 
-add_executable(T1 t1.cpp)
+add_executable(T1 T.cpp)
 
 find_package(jsoncpp CONFIG REQUIRED)
 

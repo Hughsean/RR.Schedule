@@ -46,9 +46,10 @@ namespace fox {
         std::string summary(const std::vector<Program>& vec) {
                 std::string str;
                 for (auto&& e : vec) {
-                        str = std::format("{}到达时间:{:3} 指令个数:{:3} io时间:{:3}\n",
-                                          str, e.arrive_time, e.as.length / 4,
-                                          e.io_time_required);
+                        str = std::format(
+                            "{}程序名称:{:3} 到达时间:{:3} 指令个数:{:3} io时间:{:3}\n",
+                            str, e.name, e.arrive_time, e.as.length / 4,
+                            e.io_time_required);
                 }
                 return str;
         }

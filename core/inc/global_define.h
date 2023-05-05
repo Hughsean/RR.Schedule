@@ -7,7 +7,7 @@
 #define IO_DEVICE_N     2   //
 #define PID_BITMAP_BYTE 16  //
 #define REG_NUM         8   //
-#define RR_SLICE        3   // RR时间片
+#define RR_SLICE        5   // RR时间片
 #define IRQ_N           3   // 中断表中断个数
 #define CLK_IRQ         1
 #define NAME_LENGTH     20

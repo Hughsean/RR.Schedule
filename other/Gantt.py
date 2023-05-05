@@ -74,6 +74,7 @@ for i in range(length):
             [i, i + 1],
             [namedict[piddict[int(io0e)]], namedict[piddict[int(io0e)]]],
             "--",
+            dashes=(3, 1),
             lw=2,
             color="b",
         )
@@ -82,8 +83,9 @@ for i in range(length):
             [i, i + 1],
             [namedict[piddict[int(io1e)]], namedict[piddict[int(io1e)]]],
             "--",
+            dashes=(3, 1),
             lw=2,
             color="g",
         )
-ax.vlines(vl, 0, height, linestyles="dashed",alpha=0.3)
+ax.vlines(vl, 0, height, linestyles="dashed", alpha=0.3)
 plt.show()

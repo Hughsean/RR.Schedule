@@ -6,13 +6,13 @@
 #include "fstream"
 #include "iostream"
 #include "log.h"
-#include "process_h.h"
+#include "program_h.h"
 #include "json/json.h"
 auto main() -> int {
         int  i   = 100;
-        auto vec = fox::programVec(R"(d:\WorkSpace\OS.CD\test\programs.jsonc)");
+        auto vec = fox::programVec(R"(d:\WorkSpace\RR.Schedule\test\programs.jsonc)");
         std::vector<fox::jsondict> dicts;
-        std::ofstream              ofs(R"(d:\WorkSpace\OS.CD\test\out.json)");
+        std::ofstream              ofs(R"(d:\WorkSpace\RR.Schedule\test\out.json)");
         std::cout << fox::summary(vec) << std::endl;
 
         system_init();

@@ -2,5 +2,6 @@
 > 凤旭昇 计算机20-2
 
 * 平台: Windows
-* 编译工具: MSVC(v143)
+* 开发语言: C(11), C++(20), Python
+* 环境配置: MSVC(v143), Python(v3.10)
 * 依赖: JsonCpp(v1.9.5)

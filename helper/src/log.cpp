@@ -11,10 +11,10 @@
 namespace fox {
         bool prefetchinst(const CPU* cpu, const Kernel* kernel) {
                 /* code */
-                if (cpu->user_regs.br == nullptr) {
-                        if (kernel->ready_queue.head != nullptr) {
-                                return true;
-                        }
+                if (cpu->user_regs.br == nullptr && kernel->ready_queue.head != nullptr) {
+                        // if (kernel->ready_queue.head != nullptr) {
+                        return true;
+                        // }
                 }
                 else if (kernel->rr_time >= RR_SLICE) {
                         if (kernel->ready_queue.head != nullptr) {

@@ -28,7 +28,7 @@ void io_run() {
                 }
                 (*io_device[id].head->pro_io_time)++;
                 if (io_device[id].head->time == *io_device[id].head->pro_io_time) {
-                        IO_Node *p = io_device[id].head;
+                        IO_Node *p                       = io_device[id].head;
                         *io_device[id].head->pro_io_time = 0;
                         io_device[id].head = io_device[id].head->next; /* code */
                         io_device[id].pid  = p->pid;
@@ -37,7 +37,7 @@ void io_run() {
                 }
         }
 }
-const IO_Device *ioDevice_entrance(int id) {
+const IO_Device *ioDevice_entrance(unsigned int id) {
         if (id >= IO_DEVICE_N) {
                 abort();
         }

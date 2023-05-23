@@ -10,7 +10,7 @@ extern "C" {
 #include "string"
 #include "vector"
 
-namespace fox {
+namespace rr {
         void                 programCommit(std::vector<Program> &queue);
         std::vector<Program> programVec(const std::string &FilePath);
         bool                 programFinish(const std::vector<Program> &vec);

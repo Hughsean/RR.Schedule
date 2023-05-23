@@ -1,3 +1,4 @@
+from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import numpy as np
 import json
@@ -51,7 +52,7 @@ for i in range(len(name_sort)):
     namedict[name_sort[i]] = i + 1
 
 
-print(namedict, piddict)
+# print(namedict, piddict)
 
 
 p = 0
@@ -87,5 +88,13 @@ for i in range(length):
             lw=2,
             color="g",
         )
+
 ax.vlines(vl, 0, height, linestyles="dashed", alpha=0.3)
+
+
+line1 = Line2D([], [], color="r", linestyle="-", label="CPU")
+line2 = Line2D([], [], color="b", linestyle="--", label="IO(0)")
+line3 = Line2D([], [], color="g", linestyle="--", label="IO(1)")
+
+ax.legend(handles=[line1, line2, line3], loc="best")
 plt.show()

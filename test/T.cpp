@@ -10,25 +10,26 @@
 #include "json/json.h"
 auto main() -> int {
         try {
-                int                        i   = 100;
-                auto                       vec = fox::programVec(R"(d:\WorkSpace\RR.Schedule\test\programs.jsonc)");
-                std::vector<fox::jsondict> dicts;
-                std::ofstream              ofs(R"(d:\WorkSpace\RR.Schedule\test\out.json)");
-                std::cout << fox::summary(vec) << std::endl;
+                int                       i   = 100;
+                auto                      vec = rr::programVec(R"(d:\WorkSpace\RR.Schedule\test\programs.jsonc)");
+                std::vector<rr::jsondict> dicts;
+                std::ofstream             ofs(R"(d:\WorkSpace\RR.Schedule\test\out.json)");
                 system_init();
                 while (true) {
-                        fox::programCommit(vec);
+                        rr::programCommit(vec);
                         if (i % CLK_IRQ == 0) {
                                 clk_irq();
                         }
-                        dicts.emplace_back(fox::log(std::cout));
+                        dicts.emplace_back(rr::log(std::cout));
                         io_run();
                         cpu_run();
-                        if (fox::programFinish(vec)) {
+                        rr::urlog(std::cout);
+                        if (rr::programFinish(vec)) {
                                 break;
                         }
                 }
-                fox::jsonoutput(ofs, dicts);
+                std::cout << rr::summary(vec) << std::endl;
+                rr::jsonoutput(ofs, dicts);
         }
         catch (const std::exception& e) {
         }

@@ -7,7 +7,7 @@
 #include "iostream"
 #include "json/json.h"
 
-namespace fox {
+namespace rr {
 
         void programCommit(std::vector<Program> &vec) {
                 while (true) {

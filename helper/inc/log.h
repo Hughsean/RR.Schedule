@@ -12,7 +12,7 @@ extern "C" {
 #include "string"
 #include "vector"
 
-namespace fox {
+namespace rr {
         using Info = struct info_ {
                 const Kernel    *kernel;
                 const CPU       *cpu;
@@ -23,8 +23,9 @@ namespace fox {
         std::string summary(const std::vector<Program> &vec);
         Info        infoFetch();
         jsondict    log(std::ostream &os);
+        void        urlog(std::ostream &os);
         jsondict    infoextract(const Info &info);
         std::string translate(void *p, int pc);
         void        jsonoutput(std::ostream &os, const std::vector<jsondict> &dicts);
-}  // namespace fox
+}  // namespace rr
 #endif  // OS_CD_LOG_H

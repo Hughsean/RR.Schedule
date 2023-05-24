@@ -48,7 +48,7 @@ void cpu_run() {
                 return;
         }
 
-        int *br           = cpu.user_regs.br;
+        int *br           = (int *)cpu.user_regs.br;
         int  pc           = cpu.user_regs.pc;
         int  op           = br[pc];
         int  r1           = br[pc + 1];

@@ -8,7 +8,6 @@
 #include "cpu.h"
 #include "global_define.h"
 
-// typedef enum io_ { NO, NET, DISK, USB } IO;
 typedef enum state_ {
         RUNNING,  ///< 运行状态
         READY,    ///< 就绪状态

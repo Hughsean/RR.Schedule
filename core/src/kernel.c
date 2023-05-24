@@ -1,7 +1,6 @@
 ﻿#define USE_IV_Overwrite_
 
 #include "kernel.h"
-#include "io.h"
 #include "memory.h"
 #include "stdlib.h"
 //
@@ -31,20 +30,20 @@ PCB* queue_frontpop(PCB_Queue* queue) {
 }
 PCB* queue_fetch(PCB_Queue* queue, int pid) {
         PCB** cur = &queue->head;
-        PCB*  c;
         PCB*  pre = NULL;
         while (*cur != NULL) {
-                c = *cur;
-                if (c->pid == pid) {
-                        if (c == queue->tail) {
+                if ((*cur)->pid == pid) {
+                        if (*cur == queue->tail) {
                                 queue->tail = pre;
                         }
-                        *cur = c->next;
-                        return c;
+                        PCB* ret = *cur;
+                        *cur     = (*cur)->next;
+                        return ret;
                 }
-                pre = c;
-                cur = &c->next;
+                pre = *cur;
+                cur = &(*cur)->next;
         }
+        // Warning: 返回NULL就是出问题了, 不会向空队列取值
         return NULL;
 }
 
@@ -89,8 +88,7 @@ void int_handler() {
                 pcb_free(&kernel.execute_p);
         }
         regs_reset();
-        kernel.rr_time = RR_SLICE;  // int指令必定导致进程切换, rr时间片置0
-        // schedule();
+        kernel.rr_time = RR_SLICE;  // int指令必定导致进程切换, 清除系统RR时间片
 }
 
 const Kernel* kernel_entrance() {

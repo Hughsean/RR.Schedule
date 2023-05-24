@@ -18,14 +18,13 @@ namespace rr {
                 const CPU       *cpu;
                 const IO_Device *io_devide;
         };
-
-        using jsondict = std::map<std::string, std::string>;
-        std::string summary(const std::vector<Program> &vec);
+        // clk name pid inst pc io(0) io(1)
+        using logslice = std::tuple<int, std::string, int, std::string, int, std::string, std::string>;
         Info        infoFetch();
-        jsondict    log(std::ostream &os);
+        logslice    log(std::ostream &os);
         void        urlog(std::ostream &os);
-        jsondict    infoextract(const Info &info);
+        logslice    infoextract(const Info &info);
         std::string translate(void *p, int pc);
-        void        jsonoutput(std::ostream &os, const std::vector<jsondict> &dicts);
+        void        jsonoutput(std::ostream &os, const std::vector<logslice> &slices);
 }  // namespace rr
 #endif  // OS_CD_LOG_H

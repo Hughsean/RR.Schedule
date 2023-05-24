@@ -14,12 +14,6 @@
  * op=4, int : cpu.ur[0](r0)与cpu.ur[1](r1)传递参数, 调用iv[INT]中断函数.
  * r0=0:认为IO调用, 进程阻塞, 通过r1进行设备选择; r0=1: 认为进程退出
  */
-// typedef struct inst_ {
-//         int op;  ///< 操作码
-//         int r1;  ///< 目标寄存器号
-//         int r2;  ///< 源寄存器号/操作数
-//         int r3;  ///< 源寄存器号/操作数
-// } Inst;
 
 typedef struct regs_ {
         void *br;           // 基址地址寄存器

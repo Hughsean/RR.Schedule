@@ -51,10 +51,6 @@ namedict = {}
 for i in range(len(name_sort)):
     namedict[name_sort[i]] = i + 1
 
-
-# print(namedict, piddict)
-
-
 p = 0
 vl = []
 for i in range(length):

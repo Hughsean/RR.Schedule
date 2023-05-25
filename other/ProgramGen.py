@@ -88,6 +88,7 @@ if __name__ == "__main__":
         movi 0 1    //[0]=1
         int         //exit
         """
+    # name, inst, iotime, arrivetime
     a = Program("A", inst1, 7, 8)
     b = Program("B", inst2, 5, 2)
     c = Program("C", inst3, 8, 15)

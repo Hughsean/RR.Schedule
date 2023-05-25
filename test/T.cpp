@@ -1,18 +1,14 @@
-﻿extern "C" {
+﻿#include "config.h"
 #include "core.h"
-}
-#include "cstdlib"
-#include "format"
 #include "fstream"
-#include "iostream"
 #include "log.h"
 #include "program_h.h"
-#include "json/json.h"
+
 auto main() -> int {
         try {
-                auto                      vec = rr::programVec(R"(d:\WorkSpace\RR.Schedule\test\programs.jsonc)");
+                auto                      vec = rr::programVec(PROGRAMESPATH "\\programs.jsonc");
                 std::vector<rr::logslice> dicts;
-                std::ofstream             ofs(R"(d:\WorkSpace\RR.Schedule\test\out.json)");
+                std::ofstream             ofs(OUTPUTPATH "\\out.json");
                 system_init();
                 while (true) {
                         rr::programCommit(vec);

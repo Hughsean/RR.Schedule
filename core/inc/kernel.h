@@ -20,15 +20,13 @@ typedef struct kernel_ {
         int       rr_time;      ///< 本轮RR算法已用时间
 } Kernel;
 /// @brief 时钟中断响应
-void clk_handler();
-void io_handler();
-void int_handler();
-///\return 返回内核数据
+void          clk_handler();
+void          io_handler();
+void          int_handler();
 const Kernel* kernel_entrance();
-///\brief 内核初始化
-void system_init();
-void programload(Program program);
-void schedule();
+void          system_init();
+void          programload(Program program);
+void          schedule();
 // void run();
 
 #endif  // OS_CD_KERNEL_H

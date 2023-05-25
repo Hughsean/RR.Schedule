@@ -1,4 +1,4 @@
-﻿project(core LANGUAGES C)
+﻿project(core)
 
 
 add_library(
@@ -12,13 +12,9 @@ add_library(
         src/process.c
         inc/io.h
         src/io.c
-        pub/core.h
+        core.h
 )
-
 add_library(lib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-target_include_directories(
-        core
-        PUBLIC ./pub
-        PRIVATE ./inc
-)
+target_include_directories(core PRIVATE inc)
+target_include_directories(core PUBLIC .)

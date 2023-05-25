@@ -45,17 +45,13 @@ typedef struct cpu_ {
 /// \return Irq中断表地址
 const Irq_Vector *IV_entrance();
 #ifdef USE_IV_Overwrite_
-/// \brief 中断表覆写
 void IV_Overwrite(int id, void (*fun)());
 #endif
-/// \brief CPU寄存器覆写
-void context_write(const Regs *src, Regs *tgt);
-/// \return CPU数据指针
+void       context_write(const Regs *src, Regs *tgt);
 const CPU *cpu_entrance();
 void       io_irq(unsigned int did);
 void       clk_irq();
 void       regs_reset();
-/// \brief CPU执行一个用户周期
-void cpu_run();
-void cpu_init();
+void       cpu_run();
+void       cpu_init();
 #endif  // OS_CD_CPU_H

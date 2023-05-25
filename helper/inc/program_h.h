@@ -4,9 +4,7 @@
 
 #ifndef OS_CD_PROCESS_H_H
 #define OS_CD_PROCESS_H_H
-extern "C" {
 #include "core.h"
-};
 #include "string"
 #include "vector"
 

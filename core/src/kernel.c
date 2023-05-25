@@ -26,6 +26,7 @@ PCB* queue_frontpop(PCB_Queue* queue) {
                 queue->head = queue->head->next;
                 return pcb;
         }
+        // Warning: 返回NULL就是出问题了, 不会向空队列取值
         return NULL;
 }
 PCB* queue_fetch(PCB_Queue* queue, int pid) {

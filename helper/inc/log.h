@@ -4,9 +4,7 @@
 
 #ifndef OS_CD_LOG_H
 #define OS_CD_LOG_H
-extern "C" {
 #include "core.h"
-};
 #include "iostream"
 #include "map"
 #include "string"

@@ -38,10 +38,7 @@ typedef struct pcb_ {
         struct pcb_*  next;               //
 } PCB;
 
-/// \brief 分配PID
-int pid_alloc();
-/// \brief 回收PID
-/// \param pid 回收的PID
+int           pid_alloc();
 void          pid_free(int pid);
 Address_Space AddressSpace_alloc(unsigned int length);
 void          pcb_free(PCB** pcbptr);

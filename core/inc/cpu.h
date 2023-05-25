@@ -28,7 +28,7 @@ enum { CLK, INT, IO };
 typedef struct iv_ {
         /*
          * 0: 时钟中断
-         * 1: INT处理(软中断)
+         * 1: INT处理(软件中断)
          * 2: IO中断
          */
         void (*fun[IRQ_N])();

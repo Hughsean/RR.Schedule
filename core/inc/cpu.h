@@ -4,7 +4,7 @@
 
 #ifndef OS_CD_CPU_H
 #define OS_CD_CPU_H
-#include "global_define.h"
+#include "config.h"
 
 /*
  * op=0, mov : [r1]=[r2]
@@ -19,7 +19,7 @@ typedef struct regs_ {
         void *br;           // 基址地址寄存器
         int   pc;           // PC, 即相对基址偏移量
         int   ur[REG_NUM];  // 通用寄存器
-} Regs;
+} Regs, *Regs_p;
 
 enum { CLK, INT, IO };
 /*
@@ -39,7 +39,7 @@ typedef struct cpu_ {
         int  io_bus;     // io中断信号及id
         int  clk_bus;
 
-} CPU;
+} CPU, *CPU_p;
 
 ////////////////////////////////////
 /// \return Irq中断表地址
@@ -47,11 +47,11 @@ const Irq_Vector *IV_entrance();
 #ifdef USE_IV_Overwrite_
 void IV_Overwrite(int id, void (*fun)());
 #endif
-void       context_write(const Regs *src, Regs *tgt);
-const CPU *cpu_entrance();
-void       io_irq(unsigned int did);
-void       clk_irq();
-void       regs_reset();
-void       cpu_run();
-void       cpu_init();
+void        context_write(const Regs *src, Regs *tgt);
+const CPU_p cpu_entrance();
+void        io_irq(unsigned int did);
+void        clk_irq();
+void        regs_reset();
+void        cpu_run();
+void        cpu_init();
 #endif  // OS_CD_CPU_H

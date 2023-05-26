@@ -9,13 +9,14 @@
 
 namespace rr {
 
-        void programCommit(std::vector<Program> &vec) {
+        void programCommit(std::vector<Program_p> &vec) {
                 while (true) {
                         if (vec.size() == 0) {
                                 return;
                         }
-                        if (vec.front().arrive_time == kernel_entrance()->clk) {
+                        if (program_at(vec.front()) == kernel_uclk()) {
                                 programload(vec.front());
+                                program_free(vec.front());
                                 vec.erase(vec.begin());
                         }
                         else {
@@ -23,12 +24,11 @@ namespace rr {
                         }
                 }
         }
-        std::vector<Program> programVec(const std::string &FilePath) {
-                Json::Value          root;
-                Json::Reader         reader;
-                std::ifstream        infs(FilePath, std::ios::binary);
-                std::vector<Program> vec;
-                Program              program;
+        std::vector<Program_p> programVec(const std::string &FilePath) {
+                Json::Value            root;
+                Json::Reader           reader;
+                std::ifstream          infs(FilePath, std::ios::binary);
+                std::vector<Program_p> vec;
                 if (!infs.good()) {
                         std::cerr << "文件未打开\n";
                         abort();
@@ -38,30 +38,26 @@ namespace rr {
                         abort();
                 }
                 for (auto iter = root.begin(); iter != root.end(); iter++) {
-                        std::memset(&program, 0, sizeof(Program));
-                        auto p                   = (*iter)["address_space"];
-                        auto name                = (*iter)["name"].asString();
-                        auto aslength            = p.size();
-                        program.io_time_required = (*iter)["io_time_required"].asInt();
-                        program.arrive_time      = (*iter)["arrive_time"].asInt();
-                        program.as               = AddressSpace_alloc(aslength);
-                        std::memcpy(program.name, name.c_str(), name.size());
+                        auto p                = (*iter)["address_space"];
+                        auto name             = (*iter)["name"].asString();
+                        auto aslength         = p.size();
+                        auto io_time_required = (*iter)["io_time_required"].asInt();
+                        auto arrive_time      = (*iter)["arrive_time"].asInt();
+                        int *as               = new int[aslength];
                         for (int i = 0; i < aslength; ++i) {
-                                program.as.p[i] = p[i].asInt();
+                                as[i] = p[i].asInt();
                         }
-                        vec.push_back(program);
+                        vec.push_back(program_alloc(name.c_str(), (int)name.size(), (int)aslength, as, io_time_required,
+                                                    arrive_time));
+                        delete[] as;
                 }
                 std::sort(vec.begin(), vec.end(),
-                          [&](const Program &l, const Program &r) {
-                                  return l.arrive_time < r.arrive_time;
-                          });
+                          [&](const Program_p &l, const Program_p &r) { return program_at(l) < program_at(r); });
                 return vec;
         }
 
-        bool programFinish(const std::vector<Program> &vec) {
-                auto p = kernel_entrance();
-                return p->execute_p == nullptr && p->block_queue.head == nullptr
-                       && p->ready_queue.head == nullptr && vec.size() == 0;
+        bool programFinish(const std::vector<Program_p> &vec) {
+                return nowork() == 1 && vec.size() == 0;
         }
 
-}  // namespace fox
+}  // namespace rr

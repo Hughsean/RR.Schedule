@@ -6,7 +6,6 @@
 #define OS_CD_PROCESS_H
 
 #include "cpu.h"
-#include "global_define.h"
 
 typedef enum state_ {
         RUNNING,  ///< 运行状态
@@ -24,7 +23,7 @@ typedef struct program_ {
         int           io_time_required;  ///< 程序完成IO所需时间
         int           arrive_time;       ///< 程序到达系统时间
         char          name[NAME_LENGTH];
-} Program;
+} Program, *Program_p;
 
 typedef struct pcb_ {
         int           pid;                ///< 进程ID号
@@ -36,10 +35,9 @@ typedef struct pcb_ {
         Address_Space as;                 ///< 进程地址空间
         char          name[NAME_LENGTH];  ///< 程序名称
         struct pcb_*  next;               //
-} PCB;
+} PCB, *PCB_p;
 
-int           pid_alloc();
-void          pid_free(int pid);
-Address_Space AddressSpace_alloc(unsigned int length);
-void          pcb_free(PCB** pcbptr);
+int  pid_alloc();
+void pid_free(int pid);
+void pcb_free(PCB** pcbptr);
 #endif  // OS_CD_PROCESS_H

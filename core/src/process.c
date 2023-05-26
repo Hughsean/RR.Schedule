@@ -16,7 +16,7 @@ int pid_alloc() {
                         bitmask = 0x01 << row;
                         if ((pid_map[line] & bitmask) == 0) {
                                 pid_map[line] = pid_map[line] | bitmask;
-                                pid_ = (row + 8 * line) % (8 * PID_BITMAP_BYTE) + 1;
+                                pid_          = (row + 8 * line) % (8 * PID_BITMAP_BYTE) + 1;
                                 return pid_;
                         }
                 }
@@ -29,13 +29,6 @@ void pid_free(int pid) {
         int row       = pid % 8;
         int line      = pid / 8;
         pid_map[line] = pid_map[line] & ~(0x01 << row);
-}
-
-Address_Space AddressSpace_alloc(unsigned int length) {
-        Address_Space as;
-        as.p      = (int*)malloc(sizeof(int) * length);
-        as.length = length;
-        return as;
 }
 
 void pcb_free(PCB** pcbptr) {

@@ -4,14 +4,14 @@
 
 #ifndef OS_CD_PROCESS_H_H
 #define OS_CD_PROCESS_H_H
-#include "core.h"
+#include "interface.h"
 #include "string"
 #include "vector"
 
 namespace rr {
-        void                 programCommit(std::vector<Program> &queue);
-        std::vector<Program> programVec(const std::string &FilePath);
-        bool                 programFinish(const std::vector<Program> &vec);
-}  // namespace fox
+        void                   programCommit(std::vector<Program_p> &queue);
+        std::vector<Program_p> programVec(const std::string &FilePath);
+        bool                   programFinish(const std::vector<Program_p> &vec);
+}  // namespace rr
 
 #endif  // OS_CD_PROCESS_H_H

@@ -8,7 +8,7 @@
 static IO_Device io_device[IO_DEVICE_N];
 
 void io_post(int id, int time_required, int pid, int *pro_io_time) {
-        IO_Node *p     = (IO_Node *)malloc(sizeof(IO_Node));
+        IO_Node *p     = (IO_Node *)calloc(1, sizeof(IO_Node));
         p->next        = NULL;
         p->time        = time_required;
         p->pid         = pid;
@@ -30,14 +30,14 @@ void io_run() {
                 if (io_device[id].head->time == *io_device[id].head->pro_io_time) {
                         IO_Node *p                       = io_device[id].head;
                         *io_device[id].head->pro_io_time = 0;
-                        io_device[id].head = io_device[id].head->next;
-                        io_device[id].pid  = p->pid;
+                        io_device[id].head               = io_device[id].head->next;
+                        io_device[id].pid                = p->pid;
                         free(p);
                         io_irq(id);  // 发出IO中断请求
                 }
         }
 }
-const IO_Device *ioDevice_entrance(unsigned int id) {
+const IO_Device_p ioDevice_entrance(unsigned int id) {
         if (id >= IO_DEVICE_N) {
                 abort();
         }

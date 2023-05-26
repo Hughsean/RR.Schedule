@@ -24,6 +24,7 @@ PCB* queue_frontpop(PCB_Queue* queue) {
         if (queue->head != NULL) {
                 PCB* pcb    = queue->head;
                 queue->head = queue->head->next;
+                pcb->next   = NULL;
                 return pcb;
         }
         // Warning: 返回NULL就是出问题了, 不会向空队列取值
@@ -37,8 +38,9 @@ PCB* queue_fetch(PCB_Queue* queue, int pid) {
                         if (*cur == queue->tail) {
                                 queue->tail = pre;
                         }
-                        PCB* ret = *cur;
-                        *cur     = (*cur)->next;
+                        PCB* ret  = *cur;
+                        *cur      = (*cur)->next;
+                        ret->next = NULL;
                         return ret;
                 }
                 pre = *cur;
@@ -92,7 +94,7 @@ void int_handler() {
         kernel.rr_time = RR_SLICE;  // int指令必定导致进程切换, 清除系统RR时间片
 }
 
-const Kernel* kernel_entrance() {
+const Kernel_p kernel_entrance() {
         return &kernel;
 }
 
@@ -108,19 +110,23 @@ void system_init() {
         IV_Overwrite(INT, int_handler);
 }
 
-void programload(Program program) {
-        PCB* pcb = (PCB*)malloc(sizeof(PCB));
-        memset(&pcb->regs, 0, sizeof(Regs));
-        memcpy(pcb->name, program.name, NAME_LENGTH);
+void programload(Program_p program) {
+        if (program == NULL) {
+                abort();
+        }
+        PCB* pcb  = calloc(1, sizeof(PCB));
+        pcb->as.p = calloc(program->as.length, sizeof(int));
+        memcpy(pcb->name, program->name, NAME_LENGTH);
+        memcpy(pcb->as.p, program->as.p, sizeof(int) * program->as.length);
         pcb->state            = READY;
         pcb->cpu_time         = 0;
         pcb->io_time          = 0;
         pcb->next             = NULL;
-        pcb->regs.br          = program.as.p;
-        pcb->regs.pc          = 0;
         pcb->pid              = pid_alloc();
-        pcb->as               = program.as;
-        pcb->io_time_required = program.io_time_required;
+        pcb->io_time_required = program->io_time_required;
+        pcb->as.length        = program->as.length;
+        pcb->regs.pc          = 0;
+        pcb->regs.br          = pcb->as.p;
         queue_pushback(&kernel.ready_queue, &pcb);
 }
 

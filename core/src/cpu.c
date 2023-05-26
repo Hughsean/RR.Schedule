@@ -7,7 +7,7 @@
 static CPU        cpu;
 static Irq_Vector iv;
 
-const CPU *cpu_entrance() {
+const CPU_p cpu_entrance() {
         return &cpu;
 }
 

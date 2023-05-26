@@ -18,15 +18,13 @@ typedef struct kernel_ {
         PCB_Queue block_queue;  ///< 阻塞队列
         int       clk;          ///< 当前系统的用户周期
         int       rr_time;      ///< 本轮RR算法已用时间
-} Kernel;
-/// @brief 时钟中断响应
-void          clk_handler();
-void          io_handler();
-void          int_handler();
-const Kernel* kernel_entrance();
-void          system_init();
-void          programload(Program program);
-void          schedule();
-// void run();
+} Kernel, *Kernel_p;
 
+void           clk_handler();
+void           io_handler();
+void           int_handler();
+const Kernel_p kernel_entrance();
+void           system_init();
+void           programload(Program_p program);
+void           schedule();
 #endif  // OS_CD_KERNEL_H

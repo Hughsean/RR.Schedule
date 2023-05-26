@@ -16,10 +16,10 @@ typedef struct io_devide_ {
         IO_Node *head;
         IO_Node *tail;
         int      pid;  ///< 已完成IO的PID号
-} IO_Device;
+} IO_Device, *IO_Device_p;
 
-void             io_post(int id, int time_required, int pid, int *pro_io_time);
-void             io_run();
-const IO_Device *ioDevice_entrance(unsigned int id);
-void             io_init();
+void              io_post(int id, int time_required, int pid, int *pro_io_time);
+void              io_run();
+const IO_Device_p ioDevice_entrance(unsigned int id);
+void              io_init();
 #endif  // OS_CD_IO_H

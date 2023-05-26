@@ -1,6 +1,6 @@
 ﻿#include "config.h"
-#include "core.h"
 #include "fstream"
+#include "interface.h"
 #include "log.h"
 #include "program_h.h"
 

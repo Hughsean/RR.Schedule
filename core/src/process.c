@@ -31,7 +31,7 @@ void pid_free(int pid) {
         pid_map[line] = pid_map[line] & ~(0x01 << row);
 }
 
-void pcb_free(PCB** pcbptr) {
+void pcb_free(PCB_p* pcbptr) {
         pid_free((*pcbptr)->pid);
         free((*pcbptr)->as.p);
         free((*pcbptr));

@@ -39,5 +39,5 @@ typedef struct pcb_ {
 
 int  pid_alloc();
 void pid_free(int pid);
-void pcb_free(PCB** pcbptr);
+void pcb_free(PCB_p* pcbptr);
 #endif  // OS_CD_PROCESS_H

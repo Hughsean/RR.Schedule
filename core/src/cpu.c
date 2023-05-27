@@ -11,10 +11,6 @@ const CPU_p cpu_entrance() {
         return &cpu;
 }
 
-const Irq_Vector *IV_entrance() {
-        return &iv;
-}
-
 void IV_Overwrite(int id, void (*fun)()) {
         if (id >= IRQ_N) {
                 return;

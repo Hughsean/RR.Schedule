@@ -6,11 +6,11 @@
 //
 static Kernel kernel;
 //
-void queue_pushback(PCB_Queue* queue, PCB** pcb) {
-        (*pcb)->next = NULL;
+void queue_pushback(PCB_Queue* queue, PCB_p* pcb) {
         if (*pcb == NULL) {
                 return;
         }
+        (*pcb)->next = NULL;
         if (queue->head != NULL) {
                 queue->tail->next = *pcb;
         }
@@ -31,8 +31,8 @@ PCB* queue_frontpop(PCB_Queue* queue) {
         return NULL;
 }
 PCB* queue_fetch(PCB_Queue* queue, int pid) {
-        PCB** cur = &queue->head;
-        PCB*  pre = NULL;
+        PCB_p* cur = &queue->head;
+        PCB_p  pre = NULL;
         while (*cur != NULL) {
                 if ((*cur)->pid == pid) {
                         if (*cur == queue->tail) {
@@ -78,7 +78,7 @@ void io_handler() {
 void int_handler() {
         unsigned char r0 = cpu_entrance()->user_regs.ur[0];
         unsigned char r1 = cpu_entrance()->user_regs.ur[1];
-        PCB*          p  = kernel.execute_p;
+        PCB_p         p  = kernel.execute_p;
         p->state         = WAITING;
         context_write(&cpu_entrance()->user_regs, &p->regs);
         if (r0 == 0) {
@@ -114,7 +114,7 @@ void programload(Program_p program) {
         if (program == NULL) {
                 abort();
         }
-        PCB* pcb  = calloc(1, sizeof(PCB));
+        PCB_p pcb = calloc(1, sizeof(PCB));
         pcb->as.p = calloc(program->as.length, sizeof(int));
         memcpy(pcb->name, program->name, NAME_LENGTH);
         memcpy(pcb->as.p, program->as.p, sizeof(int) * program->as.length);
@@ -139,7 +139,7 @@ void schedule() {
                 // 就绪队列无进程
                 return;
         }
-        Regs* cpu_reg = (Regs*)&cpu_entrance()->user_regs;
+        Regs_p cpu_reg = (Regs_p)&cpu_entrance()->user_regs;
         if (kernel.execute_p != NULL) {
                 // 运行的PCB不为NULL
                 // CPU中的上下文保存至PCB中

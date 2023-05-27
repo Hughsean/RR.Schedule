@@ -42,16 +42,14 @@ typedef struct cpu_ {
 } CPU, *CPU_p;
 
 ////////////////////////////////////
-/// \return Irq中断表地址
-const Irq_Vector *IV_entrance();
 #ifdef USE_IV_Overwrite_
 void IV_Overwrite(int id, void (*fun)());
 #endif
-void        context_write(const Regs *src, Regs *tgt);
-const CPU_p cpu_entrance();
-void        io_irq(unsigned int did);
-void        clk_irq();
-void        regs_reset();
-void        cpu_run();
-void        cpu_init();
+void              context_write(const Regs *src, Regs *tgt);
+const CPU_p       cpu_entrance();
+void              io_irq(unsigned int did);
+void              clk_irq();
+void              regs_reset();
+void              cpu_run();
+void              cpu_init();
 #endif  // OS_CD_CPU_H

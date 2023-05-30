@@ -132,7 +132,7 @@ void programload(Program_p program) {
         pcb->regs.pc          = 0;
         pcb->regs.br          = pcb->as.p;
         queue_pushback(&kernel.ready_queue, &pcb);
-        *clk = 0;
+        *clk = 0;  // 时钟重置
 }
 
 void schedule() {

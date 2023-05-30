@@ -23,7 +23,7 @@ void           clk_handler();
 void           io_handler();
 void           int_handler();
 const Kernel_p kernel_entrance();
-void           system_init();
+void           system_init(int* clk_);
 void           programload(Program_p program);
 void           schedule();
 #endif  // OS_CD_KERNEL_H

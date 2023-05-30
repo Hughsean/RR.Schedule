@@ -92,7 +92,7 @@ if __name__ == "__main__":
         """
     # name, inst, iotime, arrivetime
     a = Program("A", inst1, 7, 8)
-    b = Program("B", inst2, 5, 3)
+    b = Program("B", inst2, 5, 0)
     c = Program("C", inst3, 8, 15)
     d = Program("D", inst3, 3, 20)
     e = Program("E", inst2, 5, 4)

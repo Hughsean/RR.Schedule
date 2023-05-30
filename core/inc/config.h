@@ -8,6 +8,7 @@
 #define PID_BITMAP_BYTE 16
 #define REG_NUM         8
 #define RR_SLICE        2
+#define CLK_TIME        3
 #define IRQ_N           3
 #define NAME_LENGTH     20
 #endif  // OS_CD_CONFIG_H

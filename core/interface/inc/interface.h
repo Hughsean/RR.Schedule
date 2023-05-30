@@ -7,12 +7,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-// #define PID_BITMAP_BYTE 16
-#define IO_DEVICE_N     2
-#define REG_NUM         8
-#define NAME_LENGTH     20
-// #define RR_SLICE        3
-// #define IRQ_N           4
+#define IO_DEVICE_N 2
+#define REG_NUM     8
+#define NAME_LENGTH 20
+#define CLK_TIME    3
 
 typedef struct pcb_queue_ *PCB_Queue_p;
 typedef struct kernel_    *Kernel_p;
@@ -33,7 +31,7 @@ Program_p                  program_alloc(const char *name, int name_len, int as_
 void                       program_free(Program_p p);
 int                        program_at(Program_p p);
 const int                 *cpu_ur();
-extern void                system_init();
+extern void                system_init(int *clk_);
 extern void                io_init();
 extern void                io_run();
 extern void                programload(Program_p program);

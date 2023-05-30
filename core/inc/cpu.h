@@ -37,20 +37,20 @@ typedef struct iv_ {
 typedef struct cpu_ {
         Regs user_regs;  // 寄存器组
         int  io_bus;     // io中断信号及id
-        int  clk_bus;
+        int  clk_bus;    // 时钟中断信号
         int  clk;
 
 } CPU, *CPU_p;
 
 ////////////////////////////////////
 #ifdef USE_IV_Overwrite_
-void IV_Overwrite(int id, void (*fun)());
+void IV_Overwrite(int id, void (*fun)());  // 覆写中断向量(仅对kernel.c开放)
 #endif
-void        context_write(const Regs *src, Regs *tgt);
-const CPU_p cpu_entrance();
-void        io_irq(unsigned int did);
-void        clk_irq();
-void        regs_reset();
-void        cpu_run();
-void        cpu_init();
-#endif  // OS_CD_CPU_H
+void        context_write(const Regs *src, Regs *tgt);  // 寄存器覆写(不对外开放)
+const CPU_p cpu_entrance();                             // CPU访问入口(不对外开放)
+void        io_irq(unsigned int did);                   // 向CPU发出IO中断信号(不对外开放)
+void        clk_irq();                                  // 向CPU发出时钟中断信号(不对外开放)
+void        regs_reset();                               // 寄存器重置(不对外开放)
+void        cpu_run();                                  // CPU运行一个时钟周期
+void        cpu_init();                                 // CPU初始化(不对外开放)
+#endif                                                  // OS_CD_CPU_H

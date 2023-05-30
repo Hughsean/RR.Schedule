@@ -19,11 +19,11 @@ typedef struct kernel_ {
         int       rr_time;      ///< 本轮RR算法已用时间
 } Kernel, *Kernel_p;
 
-void           clk_handler();
-void           io_handler();
-void           int_handler();
-const Kernel_p kernel_entrance();
-void           system_init(int* clk_);
-void           programload(Program_p program);
-void           schedule();
-#endif  // OS_CD_KERNEL_H
+void           clk_handler();                   // 时钟中断处理程序(不对外开放)
+void           io_handler();                    // io中断处理程序(不对外开放)
+void           int_handler();                   // 自陷指令服务程序(不对外开放)
+const Kernel_p kernel_entrance();               // 内核数据访问函数(不对外开放)
+void           system_init(int* clk_);          // 系统初始化
+void           programload(Program_p program);  // 程序加载
+void           schedule();                      // 调度程序(不对外开放)
+#endif                                          // OS_CD_KERNEL_H

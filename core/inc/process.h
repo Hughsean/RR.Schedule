@@ -14,8 +14,8 @@ typedef enum state_ {
 } PRO_STATE;
 
 typedef struct address_space_ {
-        unsigned int length;
-        int*         p;
+        unsigned int length;  // 程序长度
+        int*         p;       // 程序静态代码数据,尚未装载进入内存
 } Address_Space;
 
 typedef struct program_ {
@@ -37,7 +37,7 @@ typedef struct pcb_ {
         struct pcb_*  next;               //
 } PCB, *PCB_p;
 
-int  pid_alloc();
-void pid_free(int pid);
-void pcb_free(PCB_p* pcbptr);
-#endif  // OS_CD_PROCESS_H
+int  pid_alloc();              // PID分配(不对外开放)
+void pid_free(int pid);        // PID回收(不对外开放)
+void pcb_free(PCB_p* pcbptr);  // PCB回收(不对外开放)
+#endif                         // OS_CD_PROCESS_H

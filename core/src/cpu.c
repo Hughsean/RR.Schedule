@@ -42,6 +42,7 @@ void cpu_run() {
                 cpu.io_bus = 0;
         }
         if (cpu.user_regs.br == (void *)0) {
+                cpu.clk_bus = 1;
                 return;
         }
         int *br           = (int *)cpu.user_regs.br;

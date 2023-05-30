@@ -5,6 +5,7 @@
 #include "stdlib.h"
 //
 static Kernel kernel;
+int*          clk;
 //
 void queue_pushback(PCB_Queue* queue, PCB_p* pcb) {
         if (*pcb == NULL) {
@@ -53,7 +54,9 @@ PCB* queue_fetch(PCB_Queue* queue, int pid) {
 void clk_handler() {
         schedule();
         if (cpu_entrance()->user_regs.br != NULL) {
-                kernel.rr_time++;
+                if (cpu_entrance()->io_bus == 0) {
+                        kernel.rr_time++;
+                }
                 if (kernel.execute_p != NULL) {
                         kernel.execute_p->cpu_time++;
                 }
@@ -72,7 +75,6 @@ void io_handler() {
                 pcb->state = READY;
                 queue_pushback(&kernel.ready_queue, &pcb);
         }
-        clk_irq();
 }
 
 void int_handler() {
@@ -92,15 +94,16 @@ void int_handler() {
         }
         regs_reset();
         kernel.rr_time = RR_SLICE;  // int指令必定导致进程切换, 清除系统RR时间片
-        clk_irq();
+        *clk = 0;
 }
 
 const Kernel_p kernel_entrance() {
         return &kernel;
 }
 
-void system_init() {
+void system_init(int* clk_) {
         // 内核数据初始化
+        clk = clk_;
         cpu_init();
         io_init();
         memset(&kernel, 0, sizeof(Kernel));

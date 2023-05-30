@@ -52,7 +52,6 @@ PCB* queue_fetch(PCB_Queue* queue, int pid) {
 
 void clk_handler() {
         schedule();
-        kernel.clk++;
         if (cpu_entrance()->user_regs.br != NULL) {
                 kernel.rr_time++;
                 if (kernel.execute_p != NULL) {
@@ -73,6 +72,7 @@ void io_handler() {
                 pcb->state = READY;
                 queue_pushback(&kernel.ready_queue, &pcb);
         }
+        clk_irq();
 }
 
 void int_handler() {
@@ -92,6 +92,7 @@ void int_handler() {
         }
         regs_reset();
         kernel.rr_time = RR_SLICE;  // int指令必定导致进程切换, 清除系统RR时间片
+        clk_irq();
 }
 
 const Kernel_p kernel_entrance() {

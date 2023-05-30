@@ -6,13 +6,16 @@
 
 auto main() -> int {
         try {
-                auto                      vec = rr::programVec(PROGRAMESPATH "\\programs.jsonc");
+                int                       clock = 0;
+                auto                      vec   = rr::programVec(PROGRAMESPATH "/programs.jsonc");
                 std::vector<rr::logslice> dicts;
-                std::ofstream             ofs(OUTPUTPATH "\\out.json");
+                std::ofstream             ofs(OUTPUTPATH "/out.json");
                 system_init();
                 while (true) {
                         rr::programCommit(vec);
-                        clk_irq();
+                        if (clock % 3 == 0) {
+                                clk_irq();
+                        }
                         // 每个周期开始前获取进程及IO信息
                         dicts.emplace_back(rr::log(std::cout));
                         io_run();
@@ -22,6 +25,7 @@ auto main() -> int {
                         if (rr::programFinish(vec)) {
                                 break;
                         }
+                        clock++;
                 }
                 rr::jsonoutput(ofs, dicts);
         }

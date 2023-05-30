@@ -44,6 +44,7 @@ class Program:
 
 
 if __name__ == "__main__":
+    # len=18
     inst1 = r"""
         movi 3 15   //[3]=15
         movi 4 15   //[4]=15
@@ -64,7 +65,7 @@ if __name__ == "__main__":
         movi 0 1    //[0]=1
         int         //exit
         """
-
+    # len=12
     inst2 = r"""
         movi 3 20   //[3]=20
         movi 4 20   //[4]=20
@@ -79,6 +80,7 @@ if __name__ == "__main__":
         movi 0 1    //[0]1
         int         //exit
         """
+    # len=7
     inst3 = r"""
         movi 0 0    //[0]=0
         movi 1 0    //[1]=1
@@ -90,10 +92,10 @@ if __name__ == "__main__":
         """
     # name, inst, iotime, arrivetime
     a = Program("A", inst1, 7, 8)
-    b = Program("B", inst2, 5, 2)
+    b = Program("B", inst2, 5, 3)
     c = Program("C", inst3, 8, 15)
     d = Program("D", inst3, 3, 20)
-    e = Program("E", inst2, 5, 3)
+    e = Program("E", inst2, 5, 4)
     f = Program("F", inst1, 10, 11)
 
     outjson = ec().encode(

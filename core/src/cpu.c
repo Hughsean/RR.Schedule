@@ -32,6 +32,7 @@ void regs_reset() {
 }
 
 void cpu_run() {
+        cpu.clk++;
         if (cpu.clk_bus != 0) {
                 iv.fun[CLK]();  // 响应时钟中断
                 cpu.clk_bus = 0;
@@ -43,7 +44,6 @@ void cpu_run() {
         if (cpu.user_regs.br == (void *)0) {
                 return;
         }
-
         int *br           = (int *)cpu.user_regs.br;
         int  pc           = cpu.user_regs.pc;
         int  op           = br[pc];
@@ -79,4 +79,5 @@ void cpu_run() {
 }
 void cpu_init() {
         memset(&cpu, 0, sizeof(CPU));
+        cpu.clk = 0;
 }

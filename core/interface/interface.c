@@ -9,11 +9,11 @@
 #include "stdlib.h"
 #include "string.h"
 
-int kernel_uclk() {
-        return kernel_entrance()->clk;
+int cpu_clk() {
+        return cpu_entrance()->clk;
 }
 
-int nowork() {
+int finish() {
         Kernel_p p = kernel_entrance();
         if (p->execute_p == NULL && p->block_queue.head == NULL && p->ready_queue.head == NULL) {
                 return 1;
@@ -22,16 +22,11 @@ int nowork() {
 }
 
 void predict(int *pc, void **br, PCB_p *p) {
-        *p               = NULL;
-        *pc              = -1;
-        *br              = NULL;
         const Kernel_p k = kernel_entrance();
-        if (k->rr_time < RR_SLICE) {
-                *p  = k->execute_p;
-                *pc = cpu_entrance()->user_regs.pc;
-                *br = cpu_entrance()->user_regs.br;
-        }
-        else if (k->ready_queue.head != NULL) {
+        *p               = k->execute_p;
+        *pc              = cpu_entrance()->user_regs.pc;
+        *br              = cpu_entrance()->user_regs.br;
+        if (k->ready_queue.head != NULL && k->rr_time >= RR_SLICE && cpu_entrance()->clk_bus != 0) {
                 *p  = k->ready_queue.head;
                 *pc = k->ready_queue.head->regs.pc;
                 *br = k->ready_queue.head->regs.br;

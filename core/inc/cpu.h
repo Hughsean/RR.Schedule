@@ -38,6 +38,7 @@ typedef struct cpu_ {
         Regs user_regs;  // 寄存器组
         int  io_bus;     // io中断信号及id
         int  clk_bus;
+        int  clk;
 
 } CPU, *CPU_p;
 
@@ -45,11 +46,11 @@ typedef struct cpu_ {
 #ifdef USE_IV_Overwrite_
 void IV_Overwrite(int id, void (*fun)());
 #endif
-void              context_write(const Regs *src, Regs *tgt);
-const CPU_p       cpu_entrance();
-void              io_irq(unsigned int did);
-void              clk_irq();
-void              regs_reset();
-void              cpu_run();
-void              cpu_init();
+void        context_write(const Regs *src, Regs *tgt);
+const CPU_p cpu_entrance();
+void        io_irq(unsigned int did);
+void        clk_irq();
+void        regs_reset();
+void        cpu_run();
+void        cpu_init();
 #endif  // OS_CD_CPU_H

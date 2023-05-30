@@ -14,7 +14,7 @@ namespace rr {
                         if (vec.size() == 0) {
                                 return;
                         }
-                        if (program_at(vec.front()) == kernel_uclk()) {
+                        if (program_at(vec.front()) == cpu_clk()) {
                                 programload(vec.front());
                                 program_free(vec.front());
                                 vec.erase(vec.begin());
@@ -57,7 +57,7 @@ namespace rr {
         }
 
         bool programFinish(const std::vector<Program_p> &vec) {
-                return nowork() == 1 && vec.size() == 0;
+                return finish() == 1 && vec.size() == 0;
         }
 
 }  // namespace rr

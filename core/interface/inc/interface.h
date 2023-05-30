@@ -7,12 +7,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+// #define PID_BITMAP_BYTE 16
 #define IO_DEVICE_N     2
-#define PID_BITMAP_BYTE 16
 #define REG_NUM         8
-#define RR_SLICE        5
-#define IRQ_N           3
 #define NAME_LENGTH     20
+// #define RR_SLICE        3
+// #define IRQ_N           4
 
 typedef struct pcb_queue_ *PCB_Queue_p;
 typedef struct kernel_    *Kernel_p;
@@ -22,8 +22,8 @@ typedef struct regs_      *Regs_p;
 typedef struct cpu_       *CPU_p;
 typedef struct program_   *Program_p;
 typedef struct pcb_       *PCB_p;
-int                        kernel_uclk();
-int                        nowork();
+int                        cpu_clk();
+int                        finish();
 void                       predict(int *pc, void **br, PCB_p *p);
 int                        pcb_pid(PCB_p p);
 const char                *pcb_name(PCB_p p);

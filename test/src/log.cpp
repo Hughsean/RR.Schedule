@@ -47,7 +47,7 @@ namespace rr {
         }
 
         logslice infoextract() {
-                int   clk = kernel_uclk();
+                int   clk = cpu_clk();
                 int   pid = 0;
                 int   pc;
                 void* br;
